@@ -13,13 +13,13 @@ const fetchUser=async (req,res) => {
 }   
 
 const insertUser=async (req,res) => {
-    let {firstName,lastName,userAge,Gender,userRole,emailAdd,userProfile,userPass} =req.body
+    let {firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass} =req.body
     hash(userPass,10,async(err,hashedP)=>{
 
         if (err) throw err
         console.log(hashedP);
         
-        await insertUserDb(firstName,lastName,userAge,Gender,userRole,emailAdd,userProfile,userPass)
+        await insertUserDb(firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass)
         console.log('successfully inserted a user 👌');
     })
 
@@ -32,7 +32,7 @@ const deleteUser=async (req,res) => {
     console.log('successfully deleted a user 👌');
 }   
 const updateUser=async (req,res) => {
-    let {firstName,lastName,userAge,Gender,userRole,emailAdd,userProfile,userPass}=req.body
+    let {firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass}=req.body
     let User=await getUserDb(req.params.userID)
     console.log(User)
     
@@ -42,10 +42,10 @@ const updateUser=async (req,res) => {
     Gender?Gender :Gender=User.Gender
     userRole?userRole :userRole=User.userRole
     emailAdd?emailAdd:emailAdd=User.emailAdd
-    userProfile?userProfile:userProfile=User.userProfile
+    image_url?image_url:image_url=User.image_url
     userPass?userPass:userPass=User.userPass
     
-    await updateUserDb(firstName,lastName,userAge,Gender,userRole,emailAdd,userProfile,userPass,req.params.userID)
+    await updateUserDb(firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass,req.params.userID)
     res.send(await getUsersDb())
     console.log('successfully updated a user 👌');
 }   

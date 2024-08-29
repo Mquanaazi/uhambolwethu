@@ -11,9 +11,9 @@ app.use(express.json())
 
 app.use('/assets',assetsRoutes)
 app.use( '/users',usersRoutes)
-app.use(express.static('public'))
+app.use(express.static('static'))
 app.listen(port,()=>{
-    console.log(`server is running on http://localhost: ${port}`)
+    console.log(`server is running on http://localhost:${port}`)
     
     
 })

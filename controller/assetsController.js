@@ -1,30 +1,30 @@
-import {gethotelDb,gethotelsDb,inserthotelDb,deletehotelDb,updatehotelDb} from '../model/assetsDb.js'
-import {getflightDb,getflightsDb,insertflightDb,deleteflightDb,updateflightDb} from '../model/assetsDb.js'
-import {getcarDb,getcarsDb,insertcarDb,deletecarDb,updatecarDb} from '../model/assetsDb.js'
+import {getHotelDb,getHotelsDb,insertHotelDb,deleteHotelDb,updateHotelDb} from '../model/assetsDb.js'
+import {getFlightDb,getFlightsDb,insertFlightDb,deleteFlightDb,updateFlightDb} from '../model/assetsDb.js'
+import {getCarDb,getCarsDb,insertCarDb,deleteCarDb,updateCarDb} from '../model/assetsDb.js'
 
 // _______________________________________________________________________________________________________________________
 
-const fetchhotel=async (req,res) => {
-    res.json(await gethotelDb((req.params.hotel_id)))
-    console.log('yahoo successful fetch1');
+const fetchHotel=async (req,res) => {
+    res.json(await getHotelDb((req.params.hotel_id)))
+    console.log('successfully fetched a single hotel');
        
 }
-const fetchhotels=async (req,res) => {
-    res.send(await gethotelsDb())
-    console.log('great work fetch2 👌');
+const fetchHotels=async (req,res) => {
+    res.send(await getHotelsDb())
+    console.log('successfully fetched all hotels 👌');
 }   
-const inserthotel=async (req,res) => {
+const insertHotel=async (req,res) => {
     let {hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url} =req.body
-        await inserthotelDb(hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url)
-        res.send(await gethotelsDb())
-    console.log('great work insert 👌');
+        await insertHotelDb(hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url)
+        res.send(await getHotelsDb())
+    console.log('successfully inserted 👌');
 }   
-const deletehotel=async (req,res) => {
-    await deletehotelDb(req.params.hotel_id)
-    res.send(await gethotelsDb())
-    console.log('great work delete 👌');
+const deleteHotel=async (req,res) => {
+    await deleteHotelDb(req.params.hotel_id)
+    res.send(await getHotelsDb())
+    console.log('successfully deleted 👌');
 }   
-const updatehotel=async (req,res) => {
+const updateHotel=async (req,res) => {
     let {hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url}=req.body
     let hotel=await gethotelDb(req.params.hotel_id)
     console.log(hotel)
@@ -40,36 +40,36 @@ const updatehotel=async (req,res) => {
     contact_number?contact_number:contact_number=hotel.contact_number
     image_url?image_url:image_url=hotel.image_url
       
-    await updatehotelDb(hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url,req.params.hotel_id)
-    res.send(await gethotelDb())
-    console.log('great work update 👌');
+    await updateHotelDb(hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url,req.params.hotel_id)
+    res.send(await getHotelDb())
+    console.log('successfully updated 👌');
 }   
 
 // _______________________________________________________________________________________________________________________
 
-const fetchflight=async (req,res) => {
-    res.json(await getflightDb((req.params.flight_id)))
-    console.log('yahoo successful fetch1');
+const fetchFlight=async (req,res) => {
+    res.json(await getFlightDb((req.params.flight_id)))
+    console.log('successfully fetched a single hotel');
        
 }
-const fetchflights=async (req,res) => {
-    res.send(await getflightsDb())
-    console.log('great work fetch2 👌');
+const fetchFlights=async (req,res) => {
+    res.send(await getFlightsDb())
+    console.log('successfully fetched all hotels 👌');
 }   
-const insertflight=async (req,res) => {
+const insertFlight=async (req,res) => {
     let {airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url} =req.body
-        await insertflightDb(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url)
+        await insertFlightDb(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url)
         res.send(await getflightsDb())
-    console.log('great work insert 👌');
+    console.log('successfully inserted 👌');
 }   
-const deleteflight=async (req,res) => {
-    await deleteflightDb(req.params.flight_id)
+const deleteFlight=async (req,res) => {
+    await deleteFlightDb(req.params.flight_id)
     res.send(await getflightsDb())
-    console.log('great work delete 👌');
+    console.log('successfully deleted 👌');
 }   
-const updateflight=async (req,res) => {
+const updateFlight=async (req,res) => {
     let {airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url}=req.body
-    let flight=await getflightDb(req.params.flight_id)
+    let flight=await getFlightDb(req.params.flight_id)
     console.log(flight)
 
     airline?airline:airline=flight.airline
@@ -84,36 +84,36 @@ const updateflight=async (req,res) => {
     image_url?image_url:image_url=flight.image_url    
 
       
-    await updateflightDb(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url,req.params.flight_id)
-    res.send(await getflightDb())
-    console.log('great work update 👌');
+    await updateFlightDb(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url,req.params.flight_id)
+    res.send(await getFlightDb())
+    console.log('successfully updated 👌');
 }   
 
 // _______________________________________________________________________________________________________________________
 
-const fetchcar=async (req,res) => {
-    res.json(await getcarDb((req.params.car_id)))
-    console.log('yahoo successful fetch1');
+const fetchCar=async (req,res) => {
+    res.json(await getCarDb((req.params.car_id)))
+    console.log('successfully fetched a single hotel');
        
 }
-const fetchcars=async (req,res) => {
-    res.send(await getcarsDb())
-    console.log('great work fetch2 👌');
+const fetchCars=async (req,res) => {
+    res.send(await getCarsDb())
+    console.log('successfully fetched all hotels 👌');
 }   
-const insertcar=async (req,res) => {
+const insertCar=async (req,res) => {
     let {car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url} =req.body
-        await insertcarDb(car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url)
+        await insertCarDb(car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url)
         res.send(await getcarsDb())
-    console.log('great work insert 👌');
+    console.log('successfully inserted 👌');
 }   
-const deletecar=async (req,res) => {
-    await deletecarDb(req.params.car_id)
+const deleteCar=async (req,res) => {
+    await deleteCarDb(req.params.car_id)
     res.send(await getcarsDb())
-    console.log('great work delete 👌');
+    console.log('successfully deleted 👌');
 }   
-const updatecar=async (req,res) => {
+const updateCar=async (req,res) => {
     let {car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url}=req.body
-    let car=await getcarDb(req.params.car_id)
+    let car=await getCarDb(req.params.car_id)
     console.log(car)
     
     car_make?car_make:car_make=car.car_make
@@ -127,13 +127,13 @@ const updatecar=async (req,res) => {
     availability?availability:availability=car.availability
     image_url?image_url:image_url=car.image_url
       
-    await updatecarDb(car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url,req.params.car_id)
+    await updateCarDb(car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url,req.params.car_id)
     res.send(await getcarDb())
-    console.log('great work update 👌');
+    console.log('successfully updated 👌');
 }   
 
 // _______________________________________________________________________________________________________________________
 
-export {fetchhotel,fetchhotels,inserthotel,deletehotel,updatehotel}
-export {fetchflight,fetchflights,insertflight,deleteflight,updateflight}
-export {fetchcar,fetchcars,insertcar,deletecar,updatecar}
+export {fetchHotel,fetchHotels,insertHotel,deleteHotel,updateHotel}
+export {fetchFlight,fetchFlights,insertFlight,deleteFlight,updateFlight}
+export {fetchCar,fetchCars,insertCar,deleteCar,updateCar}
