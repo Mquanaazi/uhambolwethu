@@ -1,0 +1,151 @@
+body {
+    background-color: #87CEEB; 
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+  
+  #app {
+    font-family: "Bona Nova SC", serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2F4F7F; 
+    margin-top: 0px;
+    min-height: 100vh;
+  }
+  
+  nav {
+    padding: 15px 0px 15px 0px;
+    display: flex; 
+    justify-content: space-between; 
+  }
+  
+  nav a {
+    font-weight: bold;
+    color: #3498DB; 
+    text-decoration:double;
+    background-color: #87CEEB; 
+    border-radius: 100%;
+    padding: 4px 6px; 
+    border: 5px #3498DB solid; 
+    margin: 0 15px; 
+  }
+  
+  nav a:hover {
+    font-weight: bold;
+    color: #2F4F7F; 
+    background-color: rgba(52, 152, 219, 0.7); 
+    padding: 15px 0px 15px 0px;
+  }
+  
+  nav a.router-link-exact-active {
+    color: #2F4F7F; 
+    background-color: rgba(52, 152, 219, 0.7); 
+    border-radius: 50px;
+    padding: 5px;
+  }
+  
+  img {
+    border: 3px #3498DB solid; 
+    border-radius: 10%;
+    width: 150px;
+  }
+  
+  header {
+    text-align: justify;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    background-color: rgb(17, 38, 68); 
+  }
+  
+  h1 {
+    text-align: right;
+    color: rgb(55, 182, 246); 
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    top: 0%
+  }
+  
+  #section {
+    background-image: url("https://mquanaazi.github.io/huluImages/uhamboBackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 10px;
+    justify-content: center;
+    position: sticky;
+    text-align: center;
+    padding: 7px;
+    margin-left: 0.5rem;
+    color: black;
+  }
+  
+  #footer {
+    margin-left: 1rem;
+  }
+  /* for small screens */
+  @media only screen and (max-width: 600px) {
+    .container {
+      width: 90%;
+    }
+    nav {
+        flex-direction: column; /* Stack the links vertically */
+      }
+      nav a {
+        width: 90%; /* Adjust the width of each link */
+        margin: 10px auto; /* Add some margin between links */
+      }
+    
+  }
+  
+  /* For medium screens */
+  @media only screen and (min-width: 601px) and (max-width: 1200px) {
+    .container {
+      width: 80%;
+    }
+    nav {
+        flex-direction: row; /* Keep the links horizontal */
+      }
+      nav a {
+        width: 80%; /* Adjust the width of each link */
+        margin: 10px; /* Add some margin between links */
+      }
+  }
+  
+  /* For large screens */
+  @media only screen and (min-width: 1201px) {
+    .container {
+      width: 70%;
+    }
+    nav {
+        flex-direction: row; /* Keep the links horizontal */
+      }
+      nav a {
+        width: 70%; /* Adjust the width of each link */
+        margin: 10px; /* Add some margin between links */
+      }
+  }
+
+  #assets {
+    margin-left: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* create three columns of equal width */
+    grid-gap: 1rem; /* add a gap of 1rem between items */
+  }
+  
+  .asset {
+    display: grid;
+    grid-template-rows: auto 1fr; /* create two rows, one for the image and one for the info */
+    grid-gap: 0.5rem; /* add a gap of 0.5rem between the image and the info */
+  }
+  
+  .asset img {
+    width: 100%; /* make the image take up the full width of the column */
+    height: auto; /* and adjust the height accordingly */
+  }
+  
+  .asset .info {
+    text-align: center; /* center the text */
+  }
