@@ -12,7 +12,9 @@ database: process.env.DATABASE
 })
 
 const getHotelDb = async(hotel_id)=>{
+    console.log(hotel_id);
     let [[hotelData]] = await pool.query('SELECT* FROM travel.hotels WHERE hotel_id = ?',[hotel_id])
+    
     return hotelData
      
 }

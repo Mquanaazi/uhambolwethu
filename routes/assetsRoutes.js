@@ -13,9 +13,9 @@ router.post('/hotel', insertHotel);
 router.post('/flight', insertFlight);
 router.post('/car', insertCar);
 
-router.get('/hotel/:hotelId', fetchHotel);
-router.delete('/hotel/:hotelId', deleteHotel);
-router.patch('/hotel/:hotelId', updateHotel);
+router.get('/hotel/:hotel_id', fetchHotel);
+router.delete('/hotel/:hotel_id', deleteHotel);
+router.patch('/hotel/:hotel_id', updateHotel);
 
 router.get('/flight/:flightId', fetchFlight);
 router.delete('/flight/:flightId', deleteFlight);
