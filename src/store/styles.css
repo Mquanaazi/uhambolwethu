@@ -135,17 +135,17 @@ body {
     grid-gap: 1rem; /* add a gap of 1rem between items */
   }
   
-  .asset {
+  /* .asset {
     display: grid;
-    grid-template-rows: auto 1fr; /* create two rows, one for the image and one for the info */
-    grid-gap: 0.5rem; /* add a gap of 0.5rem between the image and the info */
+    grid-template-rows: auto 1fr; 
+    grid-gap: 0.5rem; 
   }
   
   .asset img {
-    width: 100%; /* make the image take up the full width of the column */
-    height: auto; /* and adjust the height accordingly */
+    width: 100%; 
+    height: auto; 
   }
   
   .asset .info {
-    text-align: center; /* center the text */
-  }
+    text-align: center; 
+  } */

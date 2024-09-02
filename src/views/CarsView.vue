@@ -1,52 +1,98 @@
+<template>
+  <div id="section">
+    <h2 class="display-2 text-center mb-4">Our Cars</h2>
+    <section id="assets">
+      <div v-for="car in $store.state.cars" :key="car.car_id">
+        <div class="content-container mt-4">
+          <div class="d-flex justify-content-between mb-4">
+            <h2>{{ car.car_make }}</h2>
+            <h2>{{ car.car_model }}</h2>
+            <h2>Rental Price per Day: ${{ car.rental_price_per_day }}</h2>
+            <div class="lead">
+              <span class="text-success fw-bold">Price:</span> ${{ car.rental_price_per_day }}
+            </div>
+            <div class="button-wrapper d-flex justify-content-between mt-3">
+              <router-link :to="{ name: 'car', params: { id: car.car_id } }">
+                <button class="btn btn-success" @click="view(car.car_id)">View</button>
+              </router-link>
+              <button class="btn btn-dark" @click="addToCart(car)">Add to Cart</button>
+            </div>
+            <img :src="car.image_url" alt="Car Image" />
+            <button v-if="$cookies.get('token')" @click="addToCheckOut(car.car_id)">BOOK NOW!</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
 
-<template lang="">
-    <div id="section">
-    <h1>these are the cars we got</h1>
-   <p>on every car there must be a purchase button, incl an alert that the item has been purchased on click, only allow user to purchase once they got the token.</p>
-   <section id="assets" >
-   <template v-for="car in $store.state.cars" :key="car.car_id">
-        <h2>Car ID:{{car.car_id}}</h2>
-        <h2>Car make:{{car.car_make}}</h2>
-        <h2>car model:{{car.car_model}}</h2>
-        <h2>rental price per day:{{car.rental_price_per_day}}</h2>
-        <h2>fuel type:{{car.fuel_type}}</h2>
-        <h2>transmission:{{car.transmission}}</h2>
-        <h2>seats:{{car.seats}}</h2>
-        <h2>location:{{car.location}}</h2>
-        <h2>availability:{{car.availability}}</h2>
-        <h2>contact_number:{{car.contact_number}}</h2>
-        <img :src="car.image_url" alt="car " />
-       
-        <button v-if="$cookies.get('token')" @click="addToCheckOut(car.car_id)">Purchase</button>
-</template>
-</section>
-<p>fetching the data...</p>
-</div>
-</template>
 <script>
 export default {
-    data() {
-        return {
-            loading: true
-        }
+  methods: {
+    getCarsData() {
+      this.$store.dispatch('getCarsDb')
     },
-    methods:{
-        getCarsDb(){
-        this.loading = true;
-        this.$store.dispatch('getCarsDb').then(() => {
-            this.loading = false;
-        });
+    addToCheckOut(car_id) {
+      this.$store.dispatch('addToCheckOut', car_id)
     },
-
-        addToCheckOut(car_id){
-            this.$store.dispatch('addToCheckOut',car_id)
-        }
+    view(car_id) {
+      this.$router.push({ name: 'car', params: { id: car_id } })
     },
-    mounted(){
-    this.$store.dispatch('getCarsDb')
-}
+    addToCart(car) {
+      this.$store.dispatch('addToCart', car)
+    }
+  },
+  mounted() {
+    this.getCarsData()
+  }
 }
 </script>
-<style>
 
+<style>
+.content-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: rgba(44, 62, 80, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.display-2 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.card-title, .lead {
+  font-size: 18px;
+  color: white;
+}
+
+.button-wrapper {
+  margin-top: 20px;
+}
+
+.btn-success {
+  background-color: #1abc9c;
+  border-color: #1abc9c;
+  color: #fff;
+}
+
+.btn-dark {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
+  color: #fff;
+}
+
+.btn {
+  margin: 10px;
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
 </style>

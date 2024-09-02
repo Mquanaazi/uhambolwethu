@@ -7,6 +7,9 @@ import CarsView from '@/views/CarsView.vue'
 import CheckOutView from '../views/CheckOutView.vue'
 import ReviewView from '../views/ReviewView.vue'
 import ContactView from '@/views/ContactView.vue'
+// import SingleAssetComp from '@/components/SingleAssetComp.vue'
+import SingleAssetView from '@/views/SingleAssetView.vue'
+import SingleAssetComp from '@/components/SingleAssetComp.vue'
 
 const routes = [
   {
@@ -17,25 +20,52 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/single',
+    name: 'single',
+    component: SingleAssetView
   },
   {
     path: '/hotels',
     name: 'hotels',
-    component: HotelsView
+    component: HotelsView,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     name: 'hotel',
+    //     component: SingleAssetView
+    //   }
+    // ]
+  },{
+    path:'/hotels/:id',
+    name:'hotel',
+    component:SingleAssetComp
   },
   {
     path: '/flights',
     name: 'flights',
-    component: FlightsView
+    component: FlightsView,
+    children: [
+      {
+        path: ':id',
+        name: 'flight',
+        component: SingleAssetView
+      }
+    ]
   },
   {
     path: '/cars',
     name: 'cars',
-    component: CarsView
+    component: CarsView,
+    children: [
+      {
+        path: ':id',
+        name: 'car',
+        component: SingleAssetView
+      }
+    ]
   },
   {
     path: '/checkout',

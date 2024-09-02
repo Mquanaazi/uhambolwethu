@@ -1,44 +1,50 @@
 <template>
-    <div id="section">
-      <h1>This is the {{ assetType }} we got</h1>
-      <!-- <p>on every {{ assetType }} there must be a purchase button, incl an alert that the item has been purchased on click, only allow user to purchase once they got the token.</p> -->
-      <section>
-        <template v-for="asset in assets" :key="asset[assetIdKey]">
-          <SingleAssetView :asset="asset" :assetType="assetType" :assetIdKey="assetIdKey" />
-          <router-link :to="{ name: `${assetType}Detail`, params: { id: asset[assetIdKey] } }">
-            View Details
-          </router-link>
-        </template>
-      </section>
-      <p>fetching data...</p>
+  <div id="section">
+    <!-- <SingleAssetView :asset="asset" :assetType="assetType" :assetIdKey="assetIdKey" /> -->
+    <!-- {{ fetchHotel }} -->
+    <div>
+      <!-- <img :src="fetchHotel.image_url" alt=""> -->
+       {{ this.$store.state.hotel }}
     </div>
-  </template>
-  
-  <script>
-  import SingleAssetView from './SingleAssetView.vue'
-  
-  export default {
-    components: { SingleAssetView },
-    props: {
-      assets: Array,
-      assetType: String,
-      assetIdKey: String
-    },
-    data() {
-      return {
-        loading: true
+  </div>
+</template>
+
+<script>
+/*eslint-disable*/
+import SingleAssetView from '../views/SingleAssetView.vue'
+
+export default {
+  props: {
+    assetType: String,
+    assetIdKey: String
+  },
+  methods:{
+    
+  },
+  mounted() {
+    this.$store.dispatch('getHotelById',this.$route.params.id)
+    // if (this.assetType === 'hotels') {
+    //   this.$store.dispatch('getHotelById', this.$route.params.id)
+    // } else if (this.assetType === 'flights') {
+    //   this.$store.dispatch('getFlightById', this.$route.params.id)
+    // } else if (this.assetType === 'cars') {
+    //   this.$store.dispatch('getCarById', this.$route.params.id)
+    // }
+  },
+  computed: {
+    asset() {
+      if (this.assetType === 'hotels') {
+        return this.$store.state.hotel
+      } else if (this.assetType === 'flights') {
+        return this.$store.state.flight
+      } else if (this.assetType === 'cars') {
+        return this.$store.state.car
       }
     },
-    methods: {
-      getAssetsDb() {
-        this.loading = true;
-        this.$store.dispatch(`get${this.assetType}Db`).then(() => {
-          this.loading = false;
-        });
-      }
-    },
-    mounted() {
-      this.$store.dispatch(`get${this.assetType}Db`)
+    fetchHotel(){
+      let [hotel] = this.$store.state.hotels.filter(hotel => hotel.hotel_id == this.$route.params.id)
+      return hotel
     }
   }
-  </script>
+}
+</script>
