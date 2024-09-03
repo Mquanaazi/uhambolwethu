@@ -12,7 +12,7 @@
               </div>
               <div class="button-wrapper d-flex justify-content-between mt-3">
                 <router-link :to="{ name: 'flight', params: { id: flight.flight_id } }">
-                  <button class="btn btn-success" @click="view(flight.flight_id)">View</button>
+                  <button class="btn btn-success" >View</button>
                 </router-link>
                 <button class="btn btn-dark" @click="addToCart(flight)">Add to Cart</button>
               </div>
@@ -34,9 +34,9 @@
       addToCheckOut(flight_id) {
         this.$store.dispatch('addToCheckOut', flight_id)
       },
-      view(flight_id) {
-        this.$router.push({ name: 'flight', params: { id: flight_id } })
-      },
+      // viewFlight(flight_id) {
+      //   this.$router.push({ name: 'flight', params: { id: flight_id } })
+      // },
       addToCart(flight) {
         this.$store.dispatch('addToCart', flight)
       }

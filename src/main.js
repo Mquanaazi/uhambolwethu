@@ -11,6 +11,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 // import store from './store'
 import styles from "../src/store/styles.css"
 
+
 library.add(faStar);
 
 const app = createApp(App);

@@ -10,6 +10,12 @@ import ContactView from '@/views/ContactView.vue'
 // import SingleAssetComp from '@/components/SingleAssetComp.vue'
 import SingleAssetView from '@/views/SingleAssetView.vue'
 import SingleAssetComp from '@/components/SingleAssetComp.vue'
+import AdminView from '@/views/AdminView.vue'
+import Vue from 'vue'
+import Router from 'vue-router'
+import LoginView from '@/views/LoginView.vue'
+
+// import NavComp from '@/views/NavComp.vue'
 
 const routes = [
   {
@@ -47,25 +53,47 @@ const routes = [
     path: '/flights',
     name: 'flights',
     component: FlightsView,
-    children: [
-      {
-        path: ':id',
-        name: 'flight',
-        component: SingleAssetView
-      }
-    ]
+  },
+  {
+    path: '/flights/:id',
+    name: 'flight',
+    component: SingleAssetComp,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     name: 'flight',
+    //     component: SingleAssetView
+    //   }
+    // ]
+  },
+  {
+    path: '/hotels/:hotelID',
+    name: 'hotel',
+    component: SingleAssetComp,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     name: 'flight',
+    //     component: SingleAssetView
+    //   }
+    // ]
   },
   {
     path: '/cars',
     name: 'cars',
     component: CarsView,
-    children: [
-      {
-        path: ':id',
-        name: 'car',
-        component: SingleAssetView
-      }
-    ]
+  },
+  {
+    path: '/cars/:cardID',
+    name: 'car',
+    component: SingleAssetComp,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     name: 'car',
+    //     component: SingleAssetView
+    //   }
+    // ]
   },
   {
     path: '/checkout',
@@ -82,6 +110,16 @@ const routes = [
     name: 'reviews',
     component: ReviewView
   },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: AdminView,
+  },
+  {
+    path: '/auth',
+    name: 'auth',
+    component: LoginView
+  }
 ]
 
 const router = createRouter({

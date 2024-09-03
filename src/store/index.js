@@ -19,6 +19,18 @@ export default createStore({
   },
   getters: {},
   mutations: {
+    setUsers(state, payload) {
+      state.users = payload
+    },
+    removeUser(state, userID) {
+      state.users = state.users.filter(user => user.userID !== userID)
+    },
+    updateUser(state, user) {
+      const index = state.users.findIndex(u => u.userID === user.userID)
+      if (index !== -1) {
+        state.users[index] = user
+      }
+    },
     setHotels(state, payload) {
       state.hotels = payload
     },
@@ -40,68 +52,133 @@ export default createStore({
   },
   actions: {
     async addUser({ commit }, info) {
-      let data = await axios.post("http://localhost:2027/users", info)
-      toast("Hello! signed in successfully!", {
-        "theme": "auto",
-        "type": "default",
-        "position": "top-center",
-        "dangerouslyHTMLString": true
-      })
-      return data
+      try {
+        let {data} = await axios.post("http://localhost:2027/users", info)
+        toast("Hello! You have successfully registered!", {
+          "theme": "auto",
+          "type": "default",
+          "position": "top-center",
+          "dangerouslyHTMLString": true
+        })
+        commit('setUsers', data)
+      } catch (error) {
+        console.error(error)
+        toast.error("Error signing up")
+      }
     },
     async loginUser({ commit }, info) {
-      let { data } = await axios.post("http://localhost:2027/users/login", info)
-      toast("welcome back!", {
-        "theme": "auto",
-        "type": "default",
-        "position": "top-center",
-        "dangerouslyHTMLString": true
-      })
-      console.log(data);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-      await router.push('/')
-      location.reload()
+      try {
+        let { data } = await axios.post("http://localhost:2027/users/login", info)
+        toast("welcome back!", {
+          "theme": "auto",
+          "type": "default",
+          "position": "top-center",
+          "dangerouslyHTMLString": true
+        })
+        console.log(data);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+        await router.push('/')
+        location.reload()
+      } catch (error) {
+        console.error(error)
+        toast.error("Error logging in")
+      }
+    },
+    async getUsers({ commit }) {
+      try {
+        let { data } = await axios.get("http://localhost:2027/users")
+        commit("setUsers", data)
+        return data
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteUser({ commit }, userID) {
+      try {
+        const response = await axios.delete(`http://localhost:2027/users/${userID}`)
+        commit("removeUser", userID)
+        toast.success("User deleted successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error deleting user")
+      }
+    },
+    async updateUser({ commit }, user) {
+      try {
+        const response = await axios.patch(`http://localhost:2027/users/${user.userID}`, user)
+        commit("updateUser", user)
+        toast.success("User updated successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error updating user")
+      }
     },
     async fetchHotels({ commit }) {
-      let { data } = await axios.get("http://localhost:2027/assets/hotels")
-      console.log(data);
-      commit("setHotels", data)
-      return data
+      try {
+        let { data } = await axios.get("http://localhost:2027/assets/hotels")
+        console.log(data);
+        commit("setHotels", data)
+        return data
+      } catch (error) {
+        console.error(error)
+      }
     },
     async getHotelById({ commit }, hotel_id) {
-      let { data } = await axios.get(`http://localhost:2027/assets/hotel/${hotel_id}`)
-      console.log(data);
-      commit("setHotel", data)
+      try {
+        let { data } = await axios.get(`http://localhost:2027/assets/hotel/${hotel_id}`)
+        console.log(data);
+        commit("setHotel", data)
+      } catch (error) {
+        console.error(error)
+      }
     },
-      async fetchFlights({ commit }) {
+    async fetchFlights({ commit }) {
+      try {
         let { data } = await axios.get("http://localhost:2027/assets/flights")
         console.log(data);
         commit("setFlights", data)
         return data
-      },
-  
+      } catch (error) {
+        console.error(error)
+      }
+    },
     async getFlightById({ commit }, flight_id) {
-      let { data } = await axios.get(`http://localhost:2027/assets/flights/${flight_id}`)
-      console.log(data);
-      commit("setFlight", data)
-      return data
+      try {
+        let { data } = await axios.get(`http://localhost:2027/assets/flight/${flight_id}`)
+        console.log(data);
+        commit("setFlight", data)
+      } catch (error) {
+        console.error(error)
+      }
     },
     async getCarsDb({ commit }) {
-      let { data } = await axios.get("http://localhost:2027/assets/cars")
-      console.log(data);
-      commit("setCars", data)
-      return data
+      try {
+        let { data } = await axios.get("http://localhost:2027/assets/cars")
+        console.log(data);
+        commit("setCars", data)
+        return data
+      } catch (error) {
+        console.error(error)
+      }
     },
     async getCarById({ commit }, car_id) {
-      let { data } = await axios.get(`http://localhost:2027/assets/cars/${car_id}`)
-      console.log(data);
-      commit("setCar", data)
-      return data
+      try {
+        let { data } = await axios.get(`http://localhost:2027/assets/car/${car_id}`)
+        console.log(data);
+        commit("setCar", data)
+        return data
+      } catch (error) {
+        console.error(error)
+      }
     },
     async addToCheckOut({ commit }, hotel_id) {
-      let { data } = await axios.post("http://localhost:2027/assets/hotels/CheckOut", { id: hotel_id })
-      console.log(data);
-      return data
+      try {
+        let { data } = await axios.post("http://localhost:2027/assets/hotels/CheckOut", { id: hotel_id })
+        console.log(data);
+        return data
+      } catch (error) {
+        console.error(error)
+      }
     }
   },
   modules: {}

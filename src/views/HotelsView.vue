@@ -11,10 +11,10 @@
                 <span class="text-success fw-bold">Price per night</span>: ${{ hotel.price_per_night}}
 
                 <div class="button-wrapper d-flex justify-content-between mt-3">
-                    <router-link :to="{ name: 'hotel', params: { id: hotel.hotel_id } }">
-                    <button class="btn btn-success" @click="view(hotel.hotel_id)" >View</button>
+                    <router-link :to="{ name: 'hotel', params: { hotelID: hotel.hotel_id } }">
+                    <button class="btn btn-success" @click="view(hotel.hotel_id)" >VIEW MORE</button>
                     </router-link>
-                  <button class="btn btn-dark" @click="addToCart(hotel)">Add to Cart</button>
+                  <button class="btn btn-dark" @click="addToCart(hotel)">BOOK NOW!</button>
                 </div>
               </div>
               <img :src="hotel.image_url" alt="Hotel Image" />

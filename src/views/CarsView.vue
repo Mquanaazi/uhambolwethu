@@ -12,8 +12,8 @@
               <span class="text-success fw-bold">Price:</span> ${{ car.rental_price_per_day }}
             </div>
             <div class="button-wrapper d-flex justify-content-between mt-3">
-              <router-link :to="{ name: 'car', params: { id: car.car_id } }">
-                <button class="btn btn-success" @click="view(car.car_id)">View</button>
+              <router-link :to="{ name: 'car', params: { cardID: car.car_id } }">
+                <button class="btn btn-success">View</button>
               </router-link>
               <button class="btn btn-dark" @click="addToCart(car)">Add to Cart</button>
             </div>
@@ -35,7 +35,7 @@ export default {
     addToCheckOut(car_id) {
       this.$store.dispatch('addToCheckOut', car_id)
     },
-    view(car_id) {
+    viewCar(car_id) {
       this.$router.push({ name: 'car', params: { id: car_id } })
     },
     addToCart(car) {

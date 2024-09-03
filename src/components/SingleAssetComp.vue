@@ -5,6 +5,8 @@
     <div>
       <!-- <img :src="fetchHotel.image_url" alt=""> -->
        {{ this.$store.state.hotel }}
+       {{ this.$store.state.flight }}
+       {{ this.$store.state.car }}
     </div>
   </div>
 </template>
@@ -22,7 +24,10 @@ export default {
     
   },
   mounted() {
-    this.$store.dispatch('getHotelById',this.$route.params.id)
+    
+    this.$store.dispatch('getHotelById',this.$route.params.hotelID)
+    this.$store.dispatch('getFlightById',this.$route.params.id)
+    this.$store.dispatch('getCarById',this.$route.params.cardID)
     // if (this.assetType === 'hotels') {
     //   this.$store.dispatch('getHotelById', this.$route.params.id)
     // } else if (this.assetType === 'flights') {
@@ -44,7 +49,15 @@ export default {
     fetchHotel(){
       let [hotel] = this.$store.state.hotels.filter(hotel => hotel.hotel_id == this.$route.params.id)
       return hotel
-    }
+    },
+    fetchFlight(){
+      let [flight] = this.$store.state.flights.filter(flight => flight.flight_id == this.$route.params.id)
+      return flight
+    },
+    fetchCar(){
+      let [car] = this.$store.state.cars.filter(car => car.car_id == this.$route.params.id)
+      return car
+    },
   }
 }
 </script>

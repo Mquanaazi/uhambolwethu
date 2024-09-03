@@ -2,7 +2,8 @@
   <header>
     <img src="https://mquanaazi.github.io/huluImages/uhambolwethuLogo.png" class="gif" alt="logo">
     <div v-if="!$cookies.get('token')" class="signup">
-    <router-link to="/signup">Sign Up/Login</router-link>
+      <button id="signuplogin" @click="$router.push('/auth')">Sign Up/Login</button>
+      <h6>!BROWSING AS GUEST!</h6>
     </div>
     <div v-else>
       <button @click="logOut()">Logout</button>
@@ -12,19 +13,11 @@
   <nav>
     <router-link to="/">Home</router-link>
     <router-link to="/about">About</router-link>
-    <!-- <router-link to="/hotels">Hotels</router-link>
-    <router-link to="/flights">Flights</router-link>
-    <router-link to="/cars">Cars</router-link> -->
     <router-link to="/checkout">Checkout</router-link>
-    <router-link to="/reviews">Reviews</router-link>
+    <router-link to="/reviews">Reviews</router-link> 
+    <router-link to="/admin">Admin</router-link> 
     <router-link to="/contact">Customer Help Service</router-link>
-    <!-- <div v-if="!$cookies.get('token')">
-    <router-link to="/signup">Sign Up/Login</router-link>
-     
-    </div>
-    <div v-else>
-      <button @click="logOut()">Logout</button>
-    </div> -->
+   
   </nav>
 </template>
 

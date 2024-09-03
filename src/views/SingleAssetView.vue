@@ -1,12 +1,12 @@
 <template>
   <div id="section">
     <h1>{{ assetType }} Details</h1>
-    <h2>{{ assetType }} ID: {{ asset[assetIdKey] }}</h2>
+    <!-- <h2>{{ assetType }} ID: {{ asset[assetIdKey] }}</h2>
     <h2>{{ assetType }} Name: {{ asset.name }}</h2>
     <h2>Location: {{ asset.location }}</h2>
-    <h2>Rating: {{ asset.rating }}</h2>
+    <h2>Rating: {{ asset.rating }}</h2> -->
     <!-- Conditional statements for asset type specific details -->
-    <h2 v-if="assetType === 'hotels' && asset.image_url">{{hotel.image_url}}</h2>
+    <img v-if="assetType === 'hotels' && asset.image_url" :src="require(asset.image_url)" :alt="`${assetType} Image`" />
     <h2 v-if="assetType === 'hotels' && asset.hotel_id">hotel ID:{{hotel.hotel_id}}</h2>
     <h2 v-if="assetType === 'hotels' && asset.price_per_night">Price per night: {{ asset.price_per_night }}</h2>
     <h2 v-if="assetType === 'hotels' && asset.rooms_available">Rooms available: {{ asset.rooms_available }}</h2>
@@ -15,7 +15,7 @@
     <h2 v-if="assetType === 'hotels' && asset.amenities">Amenities: {{ asset.amenities }}</h2>
   
     
-    <h2 v-if="assetType === 'flights' && asset.image_url">{{ asset.image_url }}</h2>
+    <img v-if="assetType === 'flights' && asset.image_url" :src="require(asset.image_url)" :alt="`${assetType} Image`" />
     <h2 v-if="assetType === 'flights' && asset.flight_id">flight id: {{ asset.flight_id }}</h2>
     <h2 v-if="assetType === 'flights' && asset.airline">Airline: {{ asset.airline }}</h2>
     <h2 v-if="assetType === 'flights' && asset.departure_time">Departure Time: {{ asset.departure_time }}</h2>
@@ -29,7 +29,7 @@
     <h2 v-if="assetType === 'flights' && asset.seat_class">Seat Class: {{ asset.seat_class }}</h2>
 
 
-    <h2 v-if="assetType === 'cars' && asset.image_url">{{ asset.image_url }}</h2>
+    <img v-if="assetType === 'cars' && asset.image_url" :src="require(asset.image_url)" :alt="`${assetType} Image`" />
     <h2 v-if="assetType === 'cars' && asset.car_id">Car ID: {{ asset.car_id }}</h2>
     <h2 v-if="assetType === 'cars' && asset.car_make">Car Make: {{ asset.car_make }}</h2>
     <h2 v-if="assetType === 'cars' && asset.car_model">Car Model: {{ asset.car_model }}</h2>
@@ -42,7 +42,7 @@
     <h2 v-if="assetType === 'cars' && asset.location">location: {{ asset.location }}</h2>
     <h2 v-if="assetType === 'cars' && asset.availability">Car Model: {{ asset.availability }}</h2>
    
-    <img :src="asset.image_url" :alt="`${assetType} Image`" />
+    <img :src="require(asset.image_url)" :alt="`${assetType} Image`" />
     <button v-if="$cookies.get('token')" @click="addToCheckOut(asset[assetIdKey])">Book now!</button>
   </div>
 </template>
