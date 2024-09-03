@@ -16,18 +16,22 @@ const insertUserDb = async(firstName,lastName,userAge,Gender,userRole,emailAdd,i
         `,[firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass])
     return data
 }
-const deleteUserDb = async(userID)=>{
-    await pool.query('DELETE FROM travel.users WHERE userID=?',[userID])
-}
-const updateUserDb = async(firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass,userID)=>{
-
-    console.log(userID);
-    
-    let [data] = await pool.query(`
-        UPDATE travel.users SET firstName=?,lastName=?, userAge=?, Gender=?, userRole=?, emailAdd=?, image_url=?, userPass=?
-        WHERE userID=?
-        `,
-        [firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass,userID])
-    return data
-}
+const deleteUserDb = async (userID) => {
+    await pool.query('DELETE FROM travel.users WHERE userID = ?', [userID])
+  }
+  
+  const updateUserDb = async (firstName, lastName, userAge, Gender, userRole, emailAdd, image_url, userPass, userID) => {
+    await pool.query(`
+      UPDATE travel.users SET 
+        firstName = ?, 
+        lastName = ?, 
+        userAge = ?, 
+        Gender = ?, 
+        userRole = ?, 
+        emailAdd = ?, 
+        image_url = ?, 
+        userPass = ?
+      WHERE userID = ?
+    `, [firstName, lastName, userAge, Gender, userRole, emailAdd, image_url, userPass, userID])
+  }
 export {getUsersDb,getUserDb,insertUserDb,deleteUserDb,updateUserDb}

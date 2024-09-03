@@ -43,8 +43,10 @@ const updateHotelDb = async(hotel_name,location,rating,price_per_night,rooms_ava
 }
 // ____________________________________________________________________________________________________________________
 const getFlightDb = async(flight_id)=>{
+    console.log(flight_id);
      let [[flightsData]] = await pool.query('SELECT* FROM travel.flights WHERE flight_id = ?',[flight_id])
     return flightsData
+
 }
 const getFlightsDb = async()=>{
     let [flightsData] = await pool.query('SELECT * FROM travel.flights')
@@ -70,8 +72,9 @@ const updateFlightDb = async(airline,flight_number,departure_city,arrival_city,d
 // ____________________________________________________________________________________________________________________
 
 const getCarDb = async(car_id)=>{
-   let [[carsData]] = await pool.query('SELECT* FROM travel.cars WHERE car_id = ?',[car_id])
+    let [[carsData]] = await pool.query('SELECT* FROM travel.cars WHERE car_id = ?',[car_id])
     return carsData
+    console.log(carsData);
 }
 const getCarsDb = async()=>{
     let [carsData] = await pool.query('SELECT * FROM travel.cars')
