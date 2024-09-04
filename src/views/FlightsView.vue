@@ -1,32 +1,38 @@
 <template>
-    <div id="section">
-      <h2 class="display-2 text-center mb-4">Our Flights</h2>
-      <section id="assets">
-        <div v-for="flight in $store.state.flights" :key="flight.flight_id">
-          <div class="content-container mt-4">
-            <div class="d-flex justify-content-between mb-4">
-              <h2>{{ flight.airline }}</h2>
-              <h2>Location: {{ flight.location }}</h2>
-              <div class="lead">
-                <span class="text-success fw-bold">Price:</span> ${{ flight.price }}
-              </div>
-              <div class="button-wrapper d-flex justify-content-between mt-3">
-                <router-link :to="{ name: 'flight', params: { id: flight.flight_id } }">
-                  <button class="btn btn-success" >View</button>
-                </router-link>
-                <button class="btn btn-dark" @click="addToCart(flight)">Add to Cart</button>
-              </div>
-              <img :src="flight.image_url" alt="Flight Image" />
-              <button v-if="$cookies.get('token')" @click="addToCheckOut(flight.flight_id)">Book Now!</button>
+  <div id="section">
+    <h2 class="display-2 text-center mb-4">PLEASE LOGIN TO ENABLE THE BOOK NOW BUTTON</h2>
+    <section id="assets">
+      <div v-for="flight in $store.state.flights" :key="flight.flight_id">
+        <card-comp>
+          <template #cardHeader>
+            <img :src="flight.image_url" alt="Flight Image" />
+          </template>
+          <template #cardBody>
+            <h2>{{ flight.airline }}</h2>
+            <h2>Location: {{ flight.location }}</h2>
+            <div class="lead">
+              <span class="text-success fw-bold">Price:</span> ${{ flight.price }}
             </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </template>
-  
-  <script>
-  export default {
+            <div class="button-wrapper d-flex justify-content-between mt-3">
+              <router-link :to="{ name: 'flight', params: { id: flight.flight_id } }">
+                <button class="btn btn-success">View</button>
+              </router-link>
+              <button class="btn btn-dark disabled" @click="addToCart(flight)">BOOK NOW!</button>
+            </div>
+            <button v-if="$cookies.get('token')" @click="addToCheckOut(flight.flight_id)">Book Now!</button>
+          </template>
+        </card-comp>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+/* eslint-disable */
+import CardComp from '@/components/CardComp.vue'; 
+
+export default {
+  components: { CardComp },
     methods: {
       getFlightsData() {
         this.$store.dispatch('fetchFlights')

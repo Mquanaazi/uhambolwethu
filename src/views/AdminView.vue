@@ -1,322 +1,242 @@
 <template>
-    <section class="admin-section">
-      <!-- Background Image Container -->
-      <div class="background-container">
-        <img src="https://zakariyasalie.github.io/allimages/images/background1.png" alt="Background" loading="lazy" class="background-image">
+  <section class="admin-section">
+    <div class="container">
+      <div class="admin-header content-box">
+        <h1 class="admin-title">Admin Dashboard</h1>
       </div>
-  
-      <!-- Main Content Container -->
-      <div class="container">
-        <div class="admin-header content-box">
-          <h1 class="admin-title">Admin Dashboard</h1>
-        </div>
-  
-        <!-- User Management Section -->
-        <div class="admin-section content-box">
-          <h2 class="admin-subtitle">User Management</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="user in users" :key="user.userID">
-                <td>{{ user.userID }}</td>
-                <td>{{ user.firstName }} {{ user.lastName }}</td>
-                <td>{{ user.emailAdd }}</td>
-                <td>
-                  <button @click="openEditUserModal(user)" class="btn btn-primary btn-sm">Edit</button>
-                  <button @click="deleteUser(user.userID)" class="btn btn-danger btn-sm">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-                  <div class="action-buttons">
+
+      <!-- User Management Section -->
+      <div class="admin-section content-box">
+        <h2 class="admin-subtitle">User Management</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="user in users" :key="user.userID">
+              <td>{{ user.userID }}</td>
+              <td>{{ user.firstName }} {{ user.lastName }}</td>
+              <td>{{ user.emailAdd }}</td>
+              <td>
+                <button @click="openEditUserModal(user)" class="btn btn-primary btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                </button>
+                <button @click="deleteUser(user.userID)" class="btn btn-danger btn-sm">
+                  <i class="fa fa-trash" aria-hidden="false"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="action-buttons">
           <button @click="openUserModal" class="btn1">
             <i class="fas fa-plus"></i> Add New User
           </button>
         </div>
       </div>
 
-      <!-- Modal for Adding New User -->
-      <div v-if="showUserModal" class="modal-overlay">
-        <div class="modal-content">
-          <h2>Add New User</h2>
-          <form @submit.prevent="submitUser">
-            <div class="form-group">
-              <label for="UserFirstName">First Name</label>
-              <input v-model="newUser.firstName" type="text" id="UserFirstName" required>
-            </div>
-            <div class="form-group">
-              <label for="UserLastName">Last Name</label>
-              <input v-model="newUser.lastName" type="text" id="UserLastName" required>
-            </div>
-            <div class="form-group">
-              <label for="UserEmail">Email</label>
-              <input v-model="newUser.emailAdd" type="email" id="UserEmail" required>
-            </div>
-            <div class="form-group">
-              <label for="UserPassword">Password</label>
-              <input v-model="newUser.password" type="password" id="UserPassword" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button @click="closeUserModal" type="button" class="btn btn-secondary">Cancel</button>
-          </form>
+      <!-- Hotel Management Section -->
+      <div class="admin-section content-box">
+        <h2 class="admin-subtitle">Hotel Management</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="hotel in hotels" :key="hotel.hotel_id">
+              <td>{{ hotel.hotel_id }}</td>
+              <td>{{ hotel.hotel_name }}</td>
+              <td>{{ hotel.location }}</td>
+              <td>{{ hotel.price_per_night }}</td>
+              <td>
+                <button @click="openEditHotelModal(hotel)" class="btn btn-primary btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                </button>
+                <button @click="deleteHotel(hotel.hotel_id)" class="btn btn-danger btn-sm">
+                  <i class="fa fa-trash" aria-hidden="false"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="action-buttons">
+          <button @click="openHotelModal" class="btn1">
+            <i class="fas fa-plus"></i> Add New Hotel
+          </button>
         </div>
       </div>
 
-      <!-- Modal for Editing User -->
-      <div v-if="showEditUserModal" class="modal-overlay">
-        <div class="modal-content">
-          <h2>Edit User</h2>
-          <form @submit.prevent="updateUser">
-            <div class="form-group">
-              <label for="editUserFirstName">First Name</label>
-              <input v-model="userToEdit.firstName" type="text" id="editUserFirstName" required>
-            </div>
-            <div class="form-group">
-              <label for="editUserLastName">Last Name</label>
-              <input v-model="userToEdit.lastName" type="text" id="editUserLastName" required>
-            </div>
-            <div class="form-group">
-              <label for="editUserEmail">Email</label>
-              <input v-model="userToEdit.emailAdd" type="email" id="editUserEmail" required>
-            </div>
-            <div class="form-group">
-              <label for="editUserPassword">Password</label>
-              <input v-model="userToEdit.password" type="password" id="editUserPassword" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Update</button>
-            <button @click="closeEditUserModal" type="button" class="btn btn-secondary">Cancel</button>
-          </form>
+      <!-- Flight Management Section -->
+      <div class="admin-section content-box">
+        <h2 class="admin-subtitle">Flight Management</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Airline</th>
+              <th>Location</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="flight in flights" :key="flight.flight_id">
+              <td>{{ flight.flight_id }}</td>
+              <td>{{ flight.airline }}</td>
+              <td>{{ flight.location }}</td>
+              <td>{{ flight.price }}</td>
+              <td>
+                <button @click="openEditFlightModal(flight)" class="btn btn-primary btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                </button>
+                <button @click="deleteFlight(flight.flight_id)" class="btn btn-danger btn-sm">
+                  <i class="fa fa-trash" aria-hidden="false"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="action-buttons">
+          <button @click="openFlightModal" class="btn1">
+            <i class="fas fa-plus"></i> Add New Flight
+          </button>
+        </div>
+      </div>
+
+      <!-- Car Management Section -->
+      <div class="admin-section content-box">
+        <h2 class="admin-subtitle">Car Management</h2>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Price</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="car in cars" :key="car.car_id">
+              <td>{{ car.car_id }}</td>
+              <td>{{ car.brand }}</td>
+              <td>{{ car.model }}</td>
+              <td>{{ car.price_per_day }}</td>
+              <td>
+                <button @click="openEditCarModal(car)" class="btn btn-primary btn-sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                  </svg>
+                </button>
+                <button @click="deleteCar(car.car_id)" class="btn btn-danger btn-sm">
+                  <i class="fa fa-trash" aria-hidden="false"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="action-buttons">
+          <button @click="openCarModal" class="btn1">
+            <i class="fas fa-plus"></i> Add New Car
+          </button>
         </div>
       </div>
     </div>
-  </section>
+ </section>
 </template>
 
 <script>
-import { computed, reactive, ref, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { toast } from "vue3-toastify";
-
+/* eslint-disable */
 export default {
-  setup() {
-    const store = useStore();
-    const users = computed(() => store.state.users);
-
-    const showUserModal = ref(false);
-    const showEditUserModal = ref(false);
-
-    const newUser = reactive({
-      firstName: '',
-      lastName: '',
-      emailAdd: '',
-      password: ''
-    });
-
-    const userToEdit = reactive({
-      userID: '',
-      firstName: '',
-      lastName: '',
-      emailAdd: '',
-      password: ''
-    });
-
-    onMounted(async () => {
-      await store.dispatch('getUsers');
-    });
-
-    const openUserModal = () => {
-      showUserModal.value = true;
-    };
-
-    const closeUserModal = () => {
-      showUserModal.value = false;
-      resetUserForm();
-    };
-
-    const openEditUserModal = (user) => {
-      Object.assign(userToEdit, user);
-      showEditUserModal.value = true;
-    };
-
-    const closeEditUserModal = () => {
-      showEditUserModal.value = false;
-      resetUserForm();
-    };
-
-    const submitUser = async () => {
-        try {
-        await store.dispatch('createUser', newUser);
-        toast.success("User added successfully");
-        closeUserModal();
-      } catch (error) {
-        toast.error("Error adding user");
-      }
-    };
-
-    const updateUser = async () => {
-      try {
-        await store.dispatch('updateUser', userToEdit);
-        toast.success("User updated successfully");
-        closeEditUserModal();
-      } catch (error) {
-        toast.error("Error updating user");
-      }
-    };
-
-    const deleteUser = async (userID) => {
-      try {
-        await store.dispatch('deleteUser', userID);
-        toast.success("User deleted successfully");
-      } catch (error) {
-        toast.error("Error deleting user");
-      }
-    };
-
-    const resetUserForm = () => {
-      Object.assign(newUser, {
-        firstName: '',
-        lastName: '',
-        emailAdd: '',
-        password: ''
-      });
-      Object.assign(userToEdit, {
-        userID: '',
-        firstName: '',
-        lastName: '',
-        emailAdd: '',
-        password: ''
-      });
-    };
-
+  data() {
     return {
-      users,
-      showUserModal,
-      showEditUserModal,
-      newUser,
-      userToEdit,
-      openUserModal,
-      closeUserModal,
-      openEditUserModal,
-      closeEditUserModal,
-      submitUser,
-      updateUser,
-      deleteUser,
-      resetUserForm
-    };
+      users: [],
+      hotels: [],
+      flights: [],
+      cars: []
+    }
+  },
+  methods: {
+    deleteUser(userID) {
+      // delete user logic here
+    },
+    deleteHotel(hotelID) {
+      // delete hotel logic here
+    },
+    deleteFlight(flightID) {
+      // delete flight logic here
+    },
+    deleteCar(carID) {
+      // delete car logic here
+    },
+    openUserModal() {
+      // open user modal logic here
+    },
+    openHotelModal() {
+      // open hotel modal logic here
+    },
+    openFlightModal() {
+      // open flight modal logic here
+    },
+    openCarModal() {
+      // open car modal logic here
+    },
+    openEditUserModal(user) {
+      // open edit user modal logic here
+    },
+    openEditHotelModal(hotel) {
+      // open edit hotel modal logic here
+    },
+    openEditFlightModal(flight) {
+      // open edit flight modal logic here
+    },
+    openEditCarModal(car) {
+      // open edit car modal logic here
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .admin-section {
-  padding: 20px;
   margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  background-color: white;
-}
-
-.admin-title {
-  margin-bottom: 20px;
-}
-
-.admin-subtitle {
-  margin-bottom: 10px;
-}
-
-.table th, .table td {
-  text-align: center;
 }
 
 .action-buttons {
-  text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .btn1 {
-  background-color: #007bff;
-  color: white;
-  border: none;
+  background-color: #4CAF50;
+  color: #ffffff;
   padding: 10px 20px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .btn1:hover {
-  background-color: #0056b3;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  width: 80%;
-  max-width: 600px;
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input[type="text"], .form-group input[type="email"], .form-group input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-group button[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.form-group button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-.form-group button[type="button"] {
-  background-color: #ccc;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.form-group button[type="button"]:hover {
-  background-color: #aaa;
+  background-color: #3e8e41;
 }
 </style>

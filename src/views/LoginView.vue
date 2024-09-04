@@ -8,9 +8,10 @@
         <tr><th><label>Last Name:</label></th><td><input type="text" v-model="lastName"></td></tr>
         <tr><th><label>Age:</label></th><td><input type="number" v-model="userAge"></td></tr>
         <tr><th><label>Gender:</label></th><td><input type="text" v-model="Gender"></td></tr>
+        <tr><th><label>User/Admin:</label></th><td><input type="text" v-model="userRole"></td></tr>
         <tr><th><label>Email:</label></th><td><input type="email" v-model="emailAdd"></td></tr>
         <tr><th><label>Password:</label></th><td><input type="password" v-model="userPass"></td></tr>
-        <button id="signup" @click="addUser">Register</button>    
+        <button id="signup" @click="addUser()">Register</button>    
       </table>
     </div>
     <div v-else>
@@ -32,36 +33,63 @@
         lastName: "",
         userAge: "",
         Gender: "",
+        userRole: "",
         emailAdd: "",
-        userPass: "",
         image_url: "",
         username: "",
-        password: "",
+        userPass: "",
         signup: true,
       }
     },
     methods: {
-      async loginUser() {
-        await this.$store.dispatch('loginUser', { emailAdd: this.emailAdd, userPass: this.userPass })
-        location.reload()
-      }
-    },
-    computed: {
-      addUser() {
-        this.$store.dispatch('addUser', {
-          image_url: this.image_url,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          userAge: this.userAge,
-          Gender: this.Gender,
-          emailAdd: this.emailAdd,
-          userPass: this.userPass
-        })
-      }
-    }
+  async loginUser() {
+    await this.$store.dispatch('loginUser', { emailAdd: this.emailAdd, userPass: this.userPass })
+    console.log(this.userPass);
+    
+    // location.reload()
+  },
+  async addUser() {
+    await this.$store.dispatch('addUser', {
+      image_url: this.image_url,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      userAge: this.userAge,
+      Gender: this.Gender,
+      userRole: this.userRole,
+      emailAdd: this.emailAdd,
+      userPass: this.userPass
+    })
+  }
+}
   }
   </script>
   
-  <style lang="">
-  
-  </style>
+  <style lang="css">
+  #signuplogin {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #signuplogin:hover {
+    background-color: #3e8e41;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f0f0f0;
+  }
+</style>

@@ -1,7 +1,14 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 body {
     background-color: #87CEEB; 
-    min-height: 100vh;
-    background-attachment: fixed;
+    min-height:fit-content;
+    background-attachment:inherit;
+    overflow-x: hidden;
   }
   
   #app {
@@ -46,11 +53,18 @@ body {
   }
   
   img {
-    border: 3px #3498DB solid; 
+    /* border: 3px #3498DB solid;  */
     border-radius: 10%;
-    width: 150px;
+    width: 300px;
   }
   
+  #content {
+    color: 2px 2px black;
+    text-shadow: 0.5px 1px rgb(191, 193, 193);
+    font-size: large;
+    font-weight: bold;
+    justify-content: center;
+  }
   header {
     text-align: justify;
     justify-content: space-between;
@@ -58,12 +72,12 @@ body {
     margin-left: 0.5rem;
     margin-top: 1rem;
     width: 100%;
-    background-color: rgb(17, 38, 68); 
+    background-color: rgb(15, 70, 147); 
   }
   
   h1 {
     text-align: right;
-    color: rgb(55, 182, 246); 
+    color: rgb(0, 0, 0); 
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     top: 0%
@@ -71,15 +85,16 @@ body {
   
   #section {
     background-image: url("https://mquanaazi.github.io/huluImages/uhamboBackground.jpg");
+    /* filter: blur(5px);  */
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 10px;
     justify-content: center;
     position: sticky;
     text-align: center;
-    padding: 7px;
+    padding: 3px;
     margin-left: 0.5rem;
-    color: black;
+    color: rgb(3, 1, 35);
   }
   
   #footer {
@@ -135,7 +150,7 @@ body {
     grid-gap: 1rem; /* add a gap of 1rem between items */
   }
   
-  /* .asset {
+  .asset {
     display: grid;
     grid-template-rows: auto 1fr; 
     grid-gap: 0.5rem; 
@@ -148,4 +163,4 @@ body {
   
   .asset .info {
     text-align: center; 
-  } */
+  }

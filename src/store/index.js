@@ -67,6 +67,8 @@ export default createStore({
       }
     },
     async loginUser({ commit }, info) {
+      console.log(info);
+      
       try {
         let { data } = await axios.post("http://localhost:2027/users/login", info)
         toast("welcome back!", {
@@ -78,7 +80,7 @@ export default createStore({
         console.log(data);
         axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
         await router.push('/')
-        location.reload()
+        // location.reload()
       } catch (error) {
         console.error(error)
         toast.error("Error logging in")

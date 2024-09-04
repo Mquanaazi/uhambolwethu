@@ -44,27 +44,21 @@ const routes = [
     //     component: SingleAssetView
     //   }
     // ]
-  },{
-    path:'/hotels/:id',
-    name:'hotel',
-    component:SingleAssetComp
   },
+  // {
+  //   path:'/hotels/:id',
+  //   name:'hotel',
+  //   component:SingleAssetComp
+  // },
   {
     path: '/flights',
     name: 'flights',
     component: FlightsView,
   },
   {
-    path: '/flights/:id',
-    name: 'flight',
-    component: SingleAssetComp,
-    // children: [
-    //   {
-    //     path: ':id',
-    //     name: 'flight',
-    //     component: SingleAssetView
-    //   }
-    // ]
+    path: '/cars',
+    name: 'cars',
+    component: CarsView,
   },
   {
     path: '/hotels/:hotelID',
@@ -79,9 +73,16 @@ const routes = [
     // ]
   },
   {
-    path: '/cars',
-    name: 'cars',
-    component: CarsView,
+    path: '/flights/:id',
+    name: 'flight',
+    component: SingleAssetComp,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     name: 'flight',
+    //     component: SingleAssetView
+    //   }
+    // ]
   },
   {
     path: '/cars/:cardID',

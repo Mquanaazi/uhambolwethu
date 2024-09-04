@@ -1,13 +1,7 @@
 <template>
   <header>
     <img src="https://mquanaazi.github.io/huluImages/uhambolwethuLogo.png" class="gif" alt="logo">
-    <div v-if="!$cookies.get('token')" class="signup">
-      <button id="signuplogin" @click="$router.push('/auth')">Sign Up/Login</button>
-      <h6>!BROWSING AS GUEST!</h6>
-    </div>
-    <div v-else>
-      <button @click="logOut()">Logout</button>
-    </div>
+    
     <h1>UHAMBOLWETHU</h1>
   </header>
   <nav>
@@ -17,6 +11,18 @@
     <router-link to="/reviews">Reviews</router-link> 
     <router-link to="/admin">Admin</router-link> 
     <router-link to="/contact">Customer Help Service</router-link>
+    <div v-if="!$cookies.get('token')" class="signup">
+      <button id="signuplogin" @click="$router.push('/auth')">Login </button>
+      <!-- <div class="position-absolute top-50 start-50 translate-middle">
+        <h3 id="header-title">!BROWSING AS GUEST!</h3>
+      </div> -->
+    </div>
+    <div v-else>
+      <!-- <div class="position-absolute top-50 start-50 translate-middle">
+        <h3 id="header-title">!BROWSING AS REGULAR!</h3>
+      </div> -->
+      <button @click="logOut()">Logout</button>
+    </div>
    
   </nav>
 </template>
@@ -31,17 +37,19 @@ export default {
     }
   }
 }
+
 </script>
 <style>
-.signup{
-  position: absolute;
-  justify-content: flex-end;
-  background-color: rgb(171, 209, 234);
-  background-size: cover;
-  padding: 15px 0px 15px 0px;
-  border-radius: 10px;
+/*  */
 
-
-
+#header-title {
+  color: rgb(139, 104, 7);
+  transition: transform 0.5s ease-in-out;
+  position: relative; 
 }
+
+#header-title.animate {
+  transform: translateX(20px); 
+}
+
 </style>

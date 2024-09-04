@@ -230,6 +230,4 @@ svg{
   /* flex-direction: column; */
 
 
-
-
     </style>    

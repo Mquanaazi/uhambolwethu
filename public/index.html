@@ -1,11 +1,153 @@
 <!DOCTYPE html>
-<html lang="">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      body {
+        background-color: #87CEEB; 
+        min-height:fit-content;
+        background-attachment:inherit;
+      }
+      
+      #app {
+        font-family: "Bona Nova SC", serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2F4F7F; 
+        margin-top: 0px;
+        min-height: 100vh;
+      }
+      
+      nav {
+        padding: 15px 0px 15px 0px;
+        display: flex; 
+        justify-content: space-between; 
+      }
+      
+      nav a {
+        font-weight: bold;
+        color: #3498DB; 
+        text-decoration:double;
+        background-color: #87CEEB; 
+        border-radius: 100%;
+        padding: 4px 6px; 
+        border: 5px #3498DB solid; 
+        margin: 0 15px; 
+      }
+      
+      nav a:hover {
+        font-weight: bold;
+        color: #2F4F7F; 
+        background-color: rgba(52, 152, 219, 0.7); 
+        padding: 15px 0px 15px 0px;
+      }
+      
+      nav a.router-link-exact-active {
+        color: #2F4F7F; 
+        background-color: rgba(52, 152, 219, 0.7); 
+        border-radius: 50px;
+        padding: 5px;
+      }
+      
+      img {
+        /* border: 3px #3498DB solid;  */
+        border-radius: 10%;
+        width: 300px;
+      }
+      
+      header {
+        text-align: justify;
+        justify-content: space-between;
+        border-radius: 10px;
+        margin-left: 0.5rem;
+        margin-top: 1rem;
+        width: 100%;
+        background-color: rgb(15, 70, 147); 
+      }
+      
+      h1 {
+        text-align: right;
+        color: rgb(0, 0, 0); 
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: bold;
+        top: 0%
+      }
+      
+      #section {
+        background-image: url("https://mquanaazi.github.io/huluImages/uhamboBackground.jpg");
+        /* filter: blur(5px);  */
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 10px;
+        justify-content: center;
+        position: sticky;
+        text-align: center;
+        padding: 3px;
+        margin-left: 0.5rem;
+        color: rgb(3, 1, 35);
+      }
+      
+      #footer {
+        margin-left: 1rem;
+      }
+      
+      /* for small screens */
+      @media only screen and (max-width: 600px) {
+        .container {
+          width: 90%;
+        }
+        nav {
+            flex-direction: column; /* Stack the links vertically */
+          }
+          nav a {
+            width: 90%; /* Adjust the width of each link */
+            margin: 10px auto; /* Add some margin between links */
+          }
+      
+      }
+      
+      /* For medium screens */
+      @media only screen and (min-width: 601px) and (max-width: 1200px) {
+        .container {
+          width: 80%;
+        }
+        nav {
+            flex-direction: row; /* Keep the links horizontal */
+          }
+          nav a {
+            width: 80%; /* Adjust the width of each link */
+            margin: 10px; /* Add some margin between links */
+          }
+        }
+      
+      /* For large screens */
+      @media only screen and (min-width: 1201px) {
+        .container {
+          width: 70%;
+        }
+        nav {
+            flex-direction: row; /* Keep the links horizontal */
+          }
+          nav a {
+            width: 70%; /* Adjust the width of each link */
+            margin: 10px; /* Add some margin between links */
+          }
+      }
+
+      #assets {
+        margin-left: 1rem;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* create three columns of equal width */
+        grid-gap: 1rem; /* add a gap of 1rem between items */
+      }
+    </style>
   </head>
   <body>
     <noscript>
@@ -14,4 +156,5 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

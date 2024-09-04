@@ -1,38 +1,40 @@
 <template>
-    <div id="section">
-      <h2 class="display-2 text-center mb-4">Our Hotels</h2>
-      <section id="assets">
-        <div v-for="hotel in filteredhotels" :key="hotel.hotel_id">
-          <div class="content-container mt-4">
-            <div class="d-flex justify-content-between mb-4">
-              <h2>{{hotel.hotel_name}}</h2>
-              <h2>{{hotel.location}}</h2>     
-              <div class="lead">
-                <span class="text-success fw-bold">Price per night</span>: ${{ hotel.price_per_night}}
-
-                <div class="button-wrapper d-flex justify-content-between mt-3">
-                    <router-link :to="{ name: 'hotel', params: { hotelID: hotel.hotel_id } }">
-                    <button class="btn btn-success" @click="view(hotel.hotel_id)" >VIEW MORE</button>
-                    </router-link>
-                  <button class="btn btn-dark" @click="addToCart(hotel)">BOOK NOW!</button>
-                </div>
-              </div>
-              <img :src="hotel.image_url" alt="Hotel Image" />
-              <button v-if="$cookies.get('token')" @click="addToCheckOut(hotel.hotel_id)">Book Now😊</button>
+  <div id="section">
+    <h2 class="display-2 text-center mb-4">PLEASE LOGIN TO ENABLE THE BOOK NOW BUTTON</h2>
+    <section id="assets">
+      <div v-for="hotel in filteredhotels" :key="hotel.hotel_id">
+        <card-comp>
+          <template #cardHeader>
+            <img :src="hotel.image_url" alt="Hotel Image" />
+          </template>
+          <template #cardBody>
+            <h2>{{ hotel.hotel_name }}</h2>
+            <h2>{{ hotel.location }}</h2>
+            <div class="lead">
+              <span class="text-success fw-bold">Price per night</span>: ${{ hotel.price_per_night }}
             </div>
-          </div>
-        </div>
-      </section>
-      <!-- <p>fetching the data...</p> -->
-    </div>
-  </template>
+            <div class="button-wrapper d-flex justify-content-between mt-3">
+              <router-link :to="{ name: 'hotel', params: { hotelID: hotel.hotel_id } }">
+                <button class="btn btn-success" @click="view(hotel.hotel_id)">VIEW MORE</button>
+              </router-link>
+              <button class="btn btn-dark disabled" @click="addToCart(hotel)">BOOK NOW!</button>
+            </div>
+            <button v-if="$cookies.get('token')" @click="addToCheckOut(hotel.hotel_id)">Book Now😊</button>
+          </template>
+        </card-comp>
+      </div>
+    </section>
+  </div>
+</template>
   
   <script>
+  
   import { computed, ref, watch, onMounted } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
-
+  import CardComp from '@/components/CardComp.vue';
   export default {
+    components: { CardComp },
     setup() {
       const store = useStore();
       const router = useRouter();
@@ -82,7 +84,7 @@
         }
       };
       const view = (hotel_id) => {
-      router.push({ name: 'hotel', params: { id: hotel_id } });
+      router.push({ name: 'hotel', params: { hotelID: hotel_id } });
     };
   
     

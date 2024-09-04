@@ -27,6 +27,4 @@
     name: 'AboutUs',
   }
   </script>
-  <style >
-    
-  </style>
+ 
