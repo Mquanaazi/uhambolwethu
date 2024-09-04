@@ -8,6 +8,10 @@ const getUserDb = async(userID)=>{
     let [[data]] = await pool.query('SELECT * FROM travel.users WHERE userID = ?',[userID])
     return data
 }
+const getUserEmailDb = async(emailAdd)=>{
+    let [[data]] = await pool.query('SELECT * FROM travel.users WHERE emailAdd = ?',[emailAdd])
+    return data
+}
 // console.log(await getUserDb(1))
 
 const insertUserDb = async(firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass)=>{
@@ -34,4 +38,4 @@ const deleteUserDb = async (userID) => {
       WHERE userID = ?
     `, [firstName, lastName, userAge, Gender, userRole, emailAdd, image_url, userPass, userID])
   }
-export {getUsersDb,getUserDb,insertUserDb,deleteUserDb,updateUserDb}
+export {getUsersDb,getUserDb,insertUserDb,deleteUserDb,updateUserDb,getUserEmailDb}

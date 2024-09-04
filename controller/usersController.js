@@ -19,7 +19,7 @@ const insertUser=async (req,res) => {
         if (err) throw err
         console.log(hashedP);
         
-        await insertUserDb(firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,userPass)
+        await insertUserDb(firstName,lastName,userAge,Gender,userRole,emailAdd,image_url,hashedP)
         console.log('successfully inserted a user 👌');
     })
 
