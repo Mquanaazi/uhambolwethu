@@ -40,6 +40,7 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
     data() {
       return {
@@ -62,12 +63,28 @@
       }
     },
     methods: {
-      submitCheckout() {
-        // Call API or Axios to create a new checkout record
-        // You can use the `checkout` object to send the data to your server
-        console.log(this.checkout);
-        // TO DO: Implement API call or Axios request to create a new checkout record
-      },
-    },
-  };
+      async submitCheckout() {
+    try {
+      // Make a POST request to the /api/checkout endpoint
+      await axios.post('http://localhost:2027/assets/CheckOut ', this.checkout);
+      // Reset the form
+      this.checkout = {
+        userId: null,
+        bookingType: '',
+        bookingId: null,
+        bookingDetails: '',
+        totalCost: null,
+        paymentMethod: '',
+        paymentStatus: '',
+      };
+      // Show success message
+      alert('Checkout successful!');
+    } catch (error) {
+      console.error(error);
+      // Show error message
+      alert('Error creating checkout record');
+    }
+  },
+}
+  }
   </script>

@@ -17,9 +17,9 @@
               <router-link :to="{ name: 'hotel', params: { hotelID: hotel.hotel_id } }">
                 <button class="btn btn-success" @click="view(hotel.hotel_id)">VIEW MORE</button>
               </router-link>
-              <button class="btn btn-dark disabled" @click="addToCart(hotel)">BOOK NOW!</button>
+              <button class="btn btn-dark" @click="addToCheckOut(hotel.hotel_id)">BOOK NOW! 😊</button>
+              <!-- <button class="btn btn-dark" :disabled="!isLoggedIn" @click="addToCheckOut(hotel.hotel_id)">BOOK NOW! 😊</button> -->
             </div>
-            <button v-if="$cookies.get('token')" @click="addToCheckOut(hotel.hotel_id)">Book Now😊</button>
           </template>
         </card-comp>
       </div>
@@ -28,7 +28,6 @@
 </template>
   
   <script>
-  
   import { computed, ref, watch, onMounted } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
@@ -36,6 +35,7 @@
   export default {
     components: { CardComp },
     setup() {
+      const isLoggedIn = computed(() => store.state.isLoggedIn)
       const store = useStore();
       const router = useRouter();
       const searchQuery = ref('');
@@ -57,8 +57,8 @@
       }, { deep: true });
   
       // Method to add hotels to the cart
-      const addToCart = (hotel) => {
-        store.dispatch('addToCart', hotel);
+      const addToCheckOut= (hotel) => {
+        store.dispatch('addToCheckOut', hotel);
       };
   
       // Method to filter hotels based on search query
@@ -92,10 +92,11 @@
         searchQuery,
         sortOption,
         filteredhotels,
-        addToCart,
+        addToCheckOut,
         filterhotels,
         sorthotels,
-        view
+        view,
+        isLoggedIn,
       };
     },
   };

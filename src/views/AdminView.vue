@@ -37,7 +37,7 @@
           </tbody>
         </table>
         <div class="action-buttons">
-          <button @click="openUserModal" class="btn1">
+          <button @click="$router.push('/auth')" class="btn1">
             <i class="fas fa-plus"></i> Add New User
           </button>
         </div>

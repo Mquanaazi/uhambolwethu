@@ -1,4 +1,4 @@
-/* eslint-disable */
+ /* eslint-disable */
 import { createStore } from 'vuex'
 import axios from 'axios'
 import { toast } from "vue3-toastify";
@@ -9,6 +9,8 @@ axios.defaults.withCredentials = true
 
 export default createStore({
   state: {
+    token: null,
+    isLoggedIn: false,
     hotels: [],
     flights: [],
     cars: [],
@@ -16,9 +18,13 @@ export default createStore({
     hotel: [],
     flight: [],
     car: [],
+    checkouts: [],
   },
+
   getters: {},
   mutations: {
+    
+    
     setUsers(state, payload) {
       state.users = payload
     },
@@ -49,7 +55,29 @@ export default createStore({
     setCar(state, payload) {
       state.car = payload
     },
-  },
+    setToken(state, token) {
+      state.token = token;
+    },
+    setIsLoggedIn(state, isLoggedIn) {
+      state.isLoggedIn = isLoggedIn;
+    },
+    setCheckouts(state, payload) {
+      state.checkouts = payload
+    },
+    addCheckout(state, checkout) {
+      state.checkouts.push(checkout)
+    },
+    updateCheckout(state, checkout) {
+      const index = state.checkouts.findIndex(c => c.checkoutID === checkout.checkoutID)
+      if (index !== -1) {
+        state.checkouts[index] = checkout
+      }
+    },
+    removeCheckout(state, checkoutID) {
+      state.checkouts = state.checkouts.filter(c => c.checkoutID !== checkoutID)
+    },
+  
+},
   actions: {
     async addUser({ commit }, info) {
       try {
@@ -67,25 +95,26 @@ export default createStore({
       }
     },
     async loginUser({ commit }, info) {
-      console.log(info);
-      
       try {
-        let { data } = await axios.post("http://localhost:2027/users/login", info)
+        const response = await axios.post("http://localhost:2027/users/login", { emailAdd: this.emailAdd, userPass: this.userPass })
+        this.$store.commit('setToken', response.data.token); 
+        this.$store.commit('setIsLoggedIn', true);
+        let { data } = await axios.post("http://localhost:2027/users/login", info);
         toast("welcome back!", {
           "theme": "auto",
           "type": "default",
           "position": "top-center",
           "dangerouslyHTMLString": true
-        })
+        });
         console.log(data);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-        await router.push('/')
-        // location.reload()
+        axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+        await router.push('/');
       } catch (error) {
-        console.error(error)
-        toast.error("Error logging in")
+        console.error(error);
+        toast.error("Error logging in");
       }
     },
+   
     async getUsers({ commit }) {
       try {
         let { data } = await axios.get("http://localhost:2027/users")
@@ -181,7 +210,60 @@ export default createStore({
       } catch (error) {
         console.error(error)
       }
-    }
+    },
+    logoutUser({ commit }) {
+      commit('setLoggedIn', false)
+      axios.defaults.headers.common['Authorization'] = null
+  
+},
+async fetchCheckouts({ commit }) {
+  try {
+    let { data } = await axios.get("http://localhost:2027/checkouts")
+    commit("setCheckouts", data)
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+},
+async fetchCheckout({ commit }, checkoutID) {
+  try {
+    let { data } = await axios.get(`http://localhost:2027/checkouts/${checkoutID}`)
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+},
+async createCheckout({ commit }, checkoutData) {
+  try {
+    let { data } = await axios.post("http://localhost:2027/checkouts", checkoutData)
+    commit("addCheckout", data)
+    toast("Checkout created successfully!")
+  } catch (error) {
+    console.error(error)
+    toast.error("Error creating checkout")
+  }
+},
+async updateCheckout({ commit }, checkoutData) {
+  try {
+    let { data } = await axios.put(`http://localhost:2027/checkouts/${checkoutData.checkoutID}`, checkoutData)
+    commit("updateCheckout", data)
+    toast("Checkout updated successfully!")
+  } catch (error) {
+    console.error(error)
+    toast.error("Error updating checkout")
+  }
+},
+async deleteCheckout({ commit }, checkoutID) {
+  try {
+    await axios.delete(`http://localhost:2027/checkouts/${checkoutID}`)
+    commit("removeCheckout", checkoutID)
+    toast("Checkout deleted successfully!")
+  } catch (error) {
+    console.error(error)
+    toast.error("Error deleting checkout")
+  }
+  }
   },
   modules: {}
+  
 })

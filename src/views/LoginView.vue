@@ -19,35 +19,49 @@
       <table border="1">
         <tr><th><label>Email:</label></th><td><input type="email" v-model="emailAdd"></td></tr>
         <tr><th><label>Password:</label></th><td><input type="password" v-model="userPass"></td></tr>
-        <button id="signin" @click="loginUser()">login</button>
+        <button id="signin" @click="loginUser()" v-if="!token">login</button>
+      <button id="signout" @click="logoutUser()" v-else>logout</button>
       </table>
     </div>
   </template>
   
   <script>
-  /* eslint-disable */ 
+  import axios from 'axios'
+ /* eslint-disable */ 
   export default {
     data() {
       return {
-        firstName: "",
-        lastName: "",
-        userAge: "",
-        Gender: "",
-        userRole: "",
-        emailAdd: "",
-        image_url: "",
-        username: "",
-        userPass: "",
+        firstName: "Sponge",
+        lastName: "Bob",
+        userAge: "18",
+        Gender: "Trans",
+        userRole: "User",
+        emailAdd: "spongebob@uhambo.co.za",
+        image_url: "https://codjoelmayer.github.io/projectImages/images/profile-Image.png",
+        username: "spongy",
+        userPass: "spongy",
         signup: true,
+        token: null
       }
     },
     methods: {
-  async loginUser() {
-    await this.$store.dispatch('loginUser', { emailAdd: this.emailAdd, userPass: this.userPass })
-    console.log(this.userPass);
-    
-    // location.reload()
+      async loginUser() {
+    try {
+      const response = await axios.post("http://localhost:2027/users/login", { emailAdd: this.emailAdd, userPass: this.userPass })
+      this.token = response.data.token; // Update the token property
+      this.isLoggedIn = true
+      console.log(token)
+      } catch (error) {
+      console.error(error)
+    }
   },
+    logoutUser() {
+      this.token = null,
+      this.isLoggedIn = false,
+      axios.defaults.headers.common['Authorization'] = null
+  },
+
+
   async addUser() {
     await this.$store.dispatch('addUser', {
       image_url: this.image_url,
