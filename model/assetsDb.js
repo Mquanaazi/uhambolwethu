@@ -51,6 +51,7 @@ const getFlightDb = async(flight_id)=>{
 const getFlightsDb = async()=>{
     let [flightsData] = await pool.query('SELECT * FROM travel.flights')
     return flightsData
+    
 }
 const insertFlightDb = async(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url)=>{
     await pool.query(`
