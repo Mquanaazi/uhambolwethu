@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="container-fluid">
     <div class="card-header">
       <slot name="cardHeader"></slot>
     </div>
@@ -12,7 +12,8 @@
 <script>
 export default {
   props: {
-    // Optional props for card header, body, etc.
+    title: String
+    
   }
 }
 </script>
@@ -26,7 +27,9 @@ export default {
   background-color: #2c3e50;
   margin: 20px 0;
   color: white;
-  height: 450px; /* Fixed height for uniform card size */
+  border-radius: 10%;
+  width: 650px;
+  height: 650px; /* Fixed height for uniform card size */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -52,7 +55,8 @@ export default {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:center;
+  
 }
 
 h5.card-title {

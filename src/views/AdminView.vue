@@ -165,57 +165,426 @@
     </div>
  </section>
 </template>
-
 <script>
 /* eslint-disable */
+import { computed, reactive, ref, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { toast } from "vue3-toastify";
+
 export default {
-  data() {
+  setup() {
+    const store = useStore();
+    const hotels = computed(() => store.state.hotels);
+    const flights = computed(() => store.state.flights);
+    const cars = computed(() => store.state.cars);
+    const users = computed(() => store.state.users);
+
+    const showHotelModal = ref(false);
+    const showFlightModal = ref(false);
+    const showCarModal = ref(false);
+    const showEditHotelModal = ref(false);
+    const showEditFlightModal = ref(false);
+    const showEditCarModal = ref(false);
+    const showUserModal = ref(false);
+    const showEditUserModal = ref(false);
+
+    const newHotel = reactive({
+      hotel_name: '',
+      location: '',
+      rating: '',
+      price_per_night: '',
+      rooms_available: '',
+      check_in_time: '',
+      check_out_time: '',
+      amenities: '',
+      contact_number: '',
+      image_url: ''
+    });
+    const newFlight = reactive({
+      airline: '',
+      flight_number: '',
+      departure_city: '',
+      arrival_city: '',
+      departure_time: '',
+      arrival_time: '',
+      duration: '',
+      price: '',
+      seat_class: '',
+      image_url: ''
+    });
+    const newCar = reactive({
+      car_make: '',
+      car_model: '',
+      year: '',
+      rental_price_per_day: '',
+      fuel_type: '',
+      transmission: '',
+      seats: '',
+      location: '',
+      availability: '',
+      image_url: ''
+    });
+    const editHotel = reactive({
+      hotel_name: '',
+      location: '',
+      rating: '',
+      price_per_night: '',
+      rooms_available: '',
+      check_in_time: '',
+      check_out_time: '',
+      amenities: '',
+      contact_number: '',
+      image_url: ''
+    });
+    const editFlight = reactive({
+      airline: '',
+      flight_number: '',
+      departure_city: '',
+      arrival_city: '',
+      departure_time: '',
+      arrival_time: '',
+      duration: '',
+      price: '',
+      seat_class: '',
+      image_url: ''
+    });
+    const editCar = reactive({
+      car_make: '',
+      car_model: '',
+      year: '',
+      rental_price_per_day: '',
+      fuel_type: '',
+      transmission: '',
+      seats: '',
+      location: '',
+      availability: '',
+      image_url: ''
+    });
+
+   
+
+    const editUser = reactive({
+      userID: '',
+      firstName: '',
+      lastName: '',
+      emailAdd: '',
+      password: ''
+    });
+
+    const newUser = reactive({
+      firstName: '',
+      lastName: '',
+      emailAdd: '',
+      password: ''
+    });
+
+    onMounted(async () => {
+      await store.dispatch('getHotels');
+      await store.dispatch('getFlights');
+      await store.dispatch('getCars');
+      await store.dispatch('getUsers');
+    });
+
+    const openHotelModal = () => {
+      showHotelModal.value = true;
+    };
+    const openFlightModal = () => {
+      showFlightModal.value = true;
+    };
+    const openCarModal = () => {
+      showCarModal.value = true;
+    };
+
+    const closeHotelModal = () => {
+      showHotelModal.value = false;
+      resetHotelForm();
+    };
+    const closeFlightModal = () => {
+      showFlightModal.value = false;
+      resetFlightForm();
+    };
+    const closeCarModal = () => {
+      showCarModal.value = false;
+      resetCarForm();
+    };
+
+    const openEditHotelModal = (Hotel) => {
+      Object.assign(editHotel, Hotel);
+      showEditHotelModal.value = true;
+    };
+    const openEditFlightModal = (Flight) => {
+      Object.assign(editFlight, Flight);
+      showEditFlightModal.value = true;
+    };
+    const openEditCarModal = (Car) => {
+      Object.assign(editCar, Car);
+      showEditCarModal.value = true;
+    };
+
+    const closeEditHotelModal = () => {
+      showEditHotelModal.value = false;
+      resetHotelForm();
+    };
+    const closeEditFlightModal = () => {
+      showEditFlightModal.value = false;
+      resetFlightForm();
+    };
+    const closeEditCarModal = () => {
+      showEditCarModal.value = false;
+      resetCarForm();
+    };
+
+    const openUserModal = () => {
+      showUserModal.value = true;
+    };
+
+    const closeUserModal = () => {
+      showUserModal.value = false;
+      resetUserForm();
+    };
+
+    const openEditUserModal = (user) => {
+      Object.assign(editUser, user);
+      showEditUserModal.value = true;
+    };
+
+    const closeEditUserModal = () => {
+      showEditUserModal.value = false;
+      resetUserForm();
+    };
+
+    const submitHotel = async () => {
+      try {
+        await store.dispatch('createHotel', newHotel);
+        toast.success("Hotel added successfully");
+        closeHotelModal();
+      } catch (error) {
+        toast.error("Error adding Hotel");
+      }
+    };
+    const submitFlight = async () => {
+      try {
+        await store.dispatch('createFlight', newFlight);
+        toast.success("Flight added successfully");
+        closeFlightModal();
+      } catch (error) {
+        toast.error("Error adding Flight");
+      }
+    };
+    const submitCar = async () => {
+      try {
+        await store.dispatch('createCar', newCar);
+        toast.success("Car added successfully");
+        closeCarModal();
+      } catch (error) {
+        toast.error("Error adding Car");
+      }
+    };
+    const submitUser = async () => {
+      try {
+        await store.dispatch('createUser', newUser);
+        toast.success("User added successfully");
+        closeUserModal();
+      } catch (error) {
+        toast.error("Error adding User");
+      }
+    };
+
+
+    const updateHotel = async () => {
+      try {
+        await store.dispatch('updateHotel', editHotel);
+        toast.success("Hotel updated successfully");
+        closeEditHotelModal();
+      } catch (error) {
+        toast.error("Error updating Hotel");
+      }
+    };
+    const updateFlight = async () => {
+      try {
+        await store.dispatch('updateFlight', editFlight);
+        toast.success("Flight updated successfully");
+        closeEditFlightModal();
+      } catch (error) {
+        toast.error("Error updating Flight");
+      }
+    };
+    const updateCar = async () => {
+      try {
+        await store.dispatch('updateCar', editCar);
+        toast.success("Car updated successfully");
+        closeEditCarModal();
+      } catch (error) {
+        toast.error("Error updating Car");
+      }
+    };
+
+    const deleteHotel = async (HotelID) => {
+      try {
+        await store.dispatch('deleteHotel', HotelID);
+        toast.success("Hotel deleted successfully");
+      } catch (error) {
+        toast.error("Error deleting Hotel");
+      }
+    };
+    const deleteFlight = async (FlightID) => {
+      try {
+        await store.dispatch('deleteFlight', FlightID);
+        toast.success("Flight deleted successfully");
+      } catch (error) {
+        toast.error("Error deleting Flight");
+      }
+    };
+    const deleteCar = async (CarID) => {
+      try {
+        await store.dispatch('deleteCar', CarID);
+        toast.success("Car deleted successfully");
+      } catch (error) {
+        toast.error("Error deleting Car");
+      }
+    };
+
+    const updateUser = async () => {
+      try {
+        await store.dispatch('updateUser', editUser);
+        toast.success("User updated successfully");
+        closeEditUserModal();
+      } catch (error) {
+        toast.error("Error updating user");
+      }
+    };
+
+    const deleteUser = async (userID) => {
+      try {
+        await store.dispatch('deleteUser', userID);
+        toast.success("User deleted successfully");
+      } catch (error) {
+        toast.error("Error deleting user");
+      }
+    };
+
+    const resetHotelForm = () => {
+      Object.assign(newHotel, {
+      hotel_name: '',
+      location: '',
+      rating: '',
+      price_per_night: '',
+      rooms_available: '',
+      check_in_time: '',
+      check_out_time: '',
+      amenities: '',
+      contact_number: '',
+      image_url: ''
+      });
+    };
+    const resetFlightForm = () => {
+      Object.assign(newFlight, {
+      airline: '',
+      flight_number: '',
+      departure_city: '',
+      arrival_city: '',
+      departure_time: '',
+      arrival_time: '',
+      duration: '',
+      price: '',
+      seat_class: '',
+      image_url: ''
+      });
+    };
+    const resetCarForm = () => {
+      Object.assign(newCar, {
+      car_make: '',
+      car_model: '',
+      year: '',
+      rental_price_per_day: '',
+      fuel_type: '',
+      transmission: '',
+      seats: '',
+      location: '',
+      availability: '',
+      image_url: ''
+      });
+    };
+
+    const resetUserForm = () => {
+      Object.assign(newUser, {
+        firstName: '',
+        lastName: '',
+        emailAdd: '',
+        password: ''
+      });
+      Object.assign(editUser, {
+        userID: '',
+        firstName: '',
+        lastName: '',
+        emailAdd: '',
+        password: ''
+      });
+    };
+
     return {
-      users: [],
-      hotels: [],
-      flights: [],
-      cars: []
-    }
-  },
-  methods: {
-    deleteUser(userID) {
-      // delete user logic here
-    },
-    deleteHotel(hotelID) {
-      // delete hotel logic here
-    },
-    deleteFlight(flightID) {
-      // delete flight logic here
-    },
-    deleteCar(carID) {
-      // delete car logic here
-    },
-    openUserModal() {
-      // open user modal logic here
-    },
-    openHotelModal() {
-      // open hotel modal logic here
-    },
-    openFlightModal() {
-      // open flight modal logic here
-    },
-    openCarModal() {
-      // open car modal logic here
-    },
-    openEditUserModal(user) {
-      // open edit user modal logic here
-    },
-    openEditHotelModal(hotel) {
-      // open edit hotel modal logic here
-    },
-    openEditFlightModal(flight) {
-      // open edit flight modal logic here
-    },
-    openEditCarModal(car) {
-      // open edit car modal logic here
-    }
+      hotels,
+      flights,
+      cars,
+      users,
+      showHotelModal,
+      showFlightModal,
+      showCarModal,
+      showEditHotelModal,
+      showEditFlightModal,
+      showEditCarModal,
+      showUserModal,
+      showEditUserModal,
+      newHotel,
+      newFlight,
+      newCar,
+      editHotel,
+      editFlight,
+      editCar,
+      editUser,
+      // 
+      openHotelModal,
+      closeHotelModal,
+      openFlightModal,
+      closeFlightModal,
+      openCarModal,
+      closeCarModal,
+      
+      // 
+      openEditHotelModal,
+      closeEditHotelModal,
+      openEditFlightModal,
+      closeEditFlightModal,
+      openEditCarModal,
+      closeEditCarModal,
+      // 
+      openUserModal,
+      closeUserModal,
+     
+      // 
+      submitHotel,
+      updateHotel,
+      deleteHotel,
+      
+      // 
+      submitFlight,
+      updateFlight,
+      deleteFlight,
+     
+      // 
+      submitCar,
+      updateCar,
+      deleteCar,
+     
+      // 
+      updateUser,
+      deleteUser,
+      submitUser,
+      
+
+    };
   }
-}
+};
 </script>
 
 <style scoped>

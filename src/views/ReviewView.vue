@@ -1,9 +1,10 @@
 <template>
-  <div id="section">
-    <div id="testimonials">
+  <div  class="container-fluid">
+    <div class="container-fluid" >
       <ReviewComp v-for="(review, index) in reviews" :key="index" :review="review" />
     </div>
   </div>
+  
 </template>
   
   <script>

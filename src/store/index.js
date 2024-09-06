@@ -227,7 +227,7 @@ async fetchCheckouts({ commit }) {
 },
 async fetchCheckout({ commit }, checkoutID) {
   try {
-    let { data } = await axios.get(`http://localhost:2027/checkouts/${checkoutID}`)
+    let { data } = await axios.get(`http://localhost:2027/checkout/checkouts/${checkoutID}`)
     return data
   } catch (error) {
     console.error(error)
@@ -235,7 +235,7 @@ async fetchCheckout({ commit }, checkoutID) {
 },
 async createCheckout({ commit }, checkoutData) {
   try {
-    let { data } = await axios.post("http://localhost:2027/checkouts", checkoutData)
+    let { data } = await axios.post("http://localhost:2027/checkout/checkouts", checkoutData)
     commit("addCheckout", data)
     toast("Checkout created successfully!")
   } catch (error) {
@@ -245,7 +245,7 @@ async createCheckout({ commit }, checkoutData) {
 },
 async updateCheckout({ commit }, checkoutData) {
   try {
-    let { data } = await axios.put(`http://localhost:2027/checkouts/${checkoutData.checkoutID}`, checkoutData)
+    let { data } = await axios.put(`http://localhost:2027/checkout/checkouts/${checkoutData.checkoutID}`, checkoutData)
     commit("updateCheckout", data)
     toast("Checkout updated successfully!")
   } catch (error) {

@@ -1,11 +1,11 @@
 <template>
-  <div id="section">
+  <div class="container-fluid" id="section">
     <h2 class="display-2 text-center mb-4">PLEASE LOGIN TO ENABLE THE BOOK NOW BUTTON</h2>
-    <section id="assets">
+    <section  class="container-fluid">
       <div v-for="hotel in filteredhotels" :key="hotel.hotel_id">
         <card-comp>
           <template #cardHeader>
-            <img :src="hotel.image_url" alt="Hotel Image" />
+            <img :src="hotel.image_url" alt="Hotel Image"  class="img-fluid" />
           </template>
           <template #cardBody>
             <h2>{{ hotel.hotel_name }}</h2>

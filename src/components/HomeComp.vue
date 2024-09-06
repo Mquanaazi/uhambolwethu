@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div id="container">
+    <div class="container text-center">
       <div id="card" v-for="(image, index) in images" :key="index">
         <router-link :to="image.link">
           <img :src="image.src" class="card-img-top" :alt="image.alt" />
@@ -40,8 +40,8 @@ export default {
           // text: 'Book a flight of your choice with us .'
         },
         {
-          src: 'https://mquanaazi.github.io/huluImages/hyundai.jpg',
-          alt: 'hyundai',
+          src: 'https://mquanaazi.github.io/huluImages/audi.jpg',
+          alt: 'AUDI Q5',
           // title: 'drive around',
           link: '/cars',
           linkText: 'drive around',
@@ -80,9 +80,7 @@ export default {
   animation: shrink-and-grow 2s forwards;
   background-color: rgba(209, 194, 245, 0);
 }
-.card-body{
-  width: 500px;
-}
+
 #card:hover {
 
   cursor:grab;
@@ -93,9 +91,9 @@ export default {
 
 
 img {
-  width: 420px;
-  height: 10%;
-  border-radius: 10px;
+  /* width: 400px; */
+  height: 5PX;
+  border-radius: 10%;
 }
 
 @keyframes shrink-and-grow {
@@ -123,11 +121,9 @@ img {
   #card {
     width: 15rem;
     height: 20rem;
-    margin: 5px;
+    /* margin: 10px; */
   }
-  img {
-    height: 70%;
-  }
+ 
 }
 
 /* For screens between 301px and 768px */
@@ -138,11 +134,11 @@ img {
   }
   #card {
     width: 18rem;
-    height: 25rem;
+    height: 55rem;
     margin: 10px;
   }
   img {
-    height: 75%;
+    height: 25%;
   }
 }
 
@@ -159,6 +155,7 @@ img {
   }
   img {
     height: 80%;
+    width: 460px;
   }
 }
 

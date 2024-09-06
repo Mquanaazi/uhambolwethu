@@ -1,7 +1,7 @@
 <template>
-  <div class="rates">
+  <div class="container-fluid" id="rates">
     <h3>{{ review.name }}</h3>
-    <div class="rating">
+    <div class="figure">
       <span v-for="n in review.rating" :key="n">
         <font-awesome-icon icon="star" style="color: #ffd700;"></font-awesome-icon>
       </span>
@@ -34,9 +34,9 @@ export default {
   margin-bottom: 10px;
  
 }
-.rates{
+#rates{
 
-    max-width: 600px;
+    /* max-width: 100%; */
     margin: 40px auto;
     padding: 20px;
     color:aliceblue;
@@ -45,14 +45,16 @@ export default {
     box-shadow: 0 0 10px rgba(91, 4, 66, 0.748);
     transition: 1s;
 }
-.rates:hover{
+#rates:hover{
   cursor: pointer;
   transform: scale(1.05);
   background-color: #3498DB;
 }
 
 .rating span {
-  margin-right: 5px;
+  /* margin-right: 5px; */
+  font-size: 20px;
+  margin: auto;
 }
 
 .rating i {

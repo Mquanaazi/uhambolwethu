@@ -1,6 +1,7 @@
 <template>
-  <nav-comp/>
-  <div id="bodysection">
+  <div id="bodysection" class="container-fluid">
+    <nav-comp/>
+    <!-- <card-comp/> -->
     <spinner-comp-vue v-if="!contentLoaded"/> 
     <router-view v-if="contentLoaded"/>
   </div>
@@ -10,6 +11,7 @@
 import NavComp from "../src/components/NavComp.vue";
 import FooterComp from "../src/components/FooterComp.vue";
 import SpinnerCompVue from '../src/components/SpinnerComp.vue';
+// import CardComp from './components/CardComp.vue';
 
 
 export default {
@@ -17,6 +19,7 @@ export default {
     NavComp,
     FooterComp,
     SpinnerCompVue
+    // CardComp
   },
   data() {
     return {
@@ -38,7 +41,7 @@ export default {
  }
  #bodysection{
   height: 100%;
-  width:95vw
+  width:100vw
 
 }
 

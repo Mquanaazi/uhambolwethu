@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="footer">
+    <div class="container-fluid">
         <footer>
       <span>
             

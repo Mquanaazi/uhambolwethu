@@ -18,13 +18,20 @@ export default {
 
 <style scoped>
 article {
-  height: 48vh;
+  /* height: 50vh; */
+
+  margin: 15px auto;
+  margin-right: 20px auto;
+
 }
 
-#section {
+/* #section {
   height: 100%;
   width: 100%;
-}
+  display: flex;
+  justify-content: center;
+  position: absolute;
+} */
 
 h3 {
   color: rgb(0, 5, 9);
