@@ -26,7 +26,7 @@ const deleteHotel=async (req,res) => {
 }   
 const updateHotel=async (req,res) => {
     let {hotel_name,location,rating,price_per_night,rooms_available,check_in_time,check_out_time,amenities,contact_number,image_url}=req.body
-    let hotel=await gethotelDb(req.params.hotel_id)
+    let hotel=await getHotelDb(req.params.hotel_id)
     console.log(hotel)
     
     hotel_name?hotel_name:hotel_name=hotel.hotel_name
@@ -59,12 +59,12 @@ const fetchFlights=async (req,res) => {
 const insertFlight=async (req,res) => {
     let {airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url} =req.body
         await insertFlightDb(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url)
-        res.send(await getflightsDb())
+        res.send(await getFlightsDb())
     console.log('successfully inserted 👌');
 }   
 const deleteFlight=async (req,res) => {
     await deleteFlightDb(req.params.flight_id)
-    res.send(await getflightsDb())
+    res.send(await getFlightsDb())
     console.log('successfully deleted 👌');
 }   
 const updateFlight=async (req,res) => {
@@ -103,12 +103,12 @@ const fetchCars=async (req,res) => {
 const insertCar=async (req,res) => {
     let {car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url} =req.body
         await insertCarDb(car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url)
-        res.send(await getcarsDb())
+        res.send(await getCarsDb())
     console.log('successfully inserted 👌');
 }   
 const deleteCar=async (req,res) => {
     await deleteCarDb(req.params.car_id)
-    res.send(await getcarsDb())
+    res.send(await getCarsDb())
     console.log('successfully deleted 👌');
 }   
 const updateCar=async (req,res) => {
@@ -128,7 +128,7 @@ const updateCar=async (req,res) => {
     image_url?image_url:image_url=car.image_url
       
     await updateCarDb(car_make,car_model,year,rental_price_per_day,fuel_type,transmission,seats,location,availability,image_url,req.params.car_id)
-    res.send(await getcarDb())
+    res.send(await getCarDb())
     console.log('successfully updated 👌');
 }   
 

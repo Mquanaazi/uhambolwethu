@@ -62,7 +62,7 @@ const insertFlightDb = async(airline,flight_number,departure_city,arrival_city,d
 const deleteFlightDb = async(flight_id)=>{
     await pool.query('DELETE FROM travel.flights WHERE flight_id=?',[flight_id])
 }
-const updateFlightDb = async(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url)=>{
+const updateFlightDb = async(airline,flight_number,departure_city,arrival_city,departure_time,arrival_time,duration,price,seat_class,image_url,flight_id)=>{
     let [flightsData] = await pool.query(`
         UPDATE travel.flights SET airline=?, flight_number=?, departure_city=?, arrival_city=?, departure_time=?, arrival_time=?, duration=?, price=?, seat_class=? ,image_url=?
         WHERE flight_id=?
