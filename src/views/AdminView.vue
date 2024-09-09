@@ -69,6 +69,7 @@
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                   </svg>
                 </button>
+                
                 <button @click="deleteHotel(hotel.hotel_id)" class="btn btn-danger btn-sm">
                   <i class="fa fa-trash" aria-hidden="false"></i>
                 </button>
@@ -77,7 +78,7 @@
           </tbody>
         </table>
         <div class="action-buttons">
-          <button @click="openHotelModal" class="btn1">
+          <button @click="openHotelModal()" class="btn1">
             <i class="fas fa-plus"></i> Add New Hotel
           </button>
         </div>
@@ -117,7 +118,7 @@
           </tbody>
         </table>
         <div class="action-buttons">
-          <button @click="openFlightModal" class="btn1">
+          <button @click="openFlightModal()" class="btn1">
             <i class="fas fa-plus"></i> Add New Flight
           </button>
         </div>
@@ -139,8 +140,8 @@
           <tbody>
             <tr v-for="car in cars" :key="car.car_id">
               <td>{{ car.car_id }}</td>
-              <td>{{ car.brand }}</td>
-              <td>{{ car.model }}</td>
+              <td>{{ car.car_brand }}</td>
+              <td>{{ car.car_model }}</td>
               <td>{{ car.price_per_day }}</td>
               <td>
                 <button @click="openEditCarModal(car)" class="btn btn-primary btn-sm">
@@ -157,7 +158,7 @@
           </tbody>
         </table>
         <div class="action-buttons">
-          <button @click="openCarModal" class="btn1">
+          <button @click="openCarModal()" class="btn1">
             <i class="fas fa-plus"></i> Add New Car
           </button>
         </div>
@@ -279,10 +280,14 @@ export default {
     });
 
     onMounted(async () => {
-      await store.dispatch('getHotels');
-      await store.dispatch('getFlights');
-      await store.dispatch('getCars');
-      await store.dispatch('getUsers');
+      try {
+        await store.dispatch('fetchHotels');
+        await store.dispatch('fetchFlights');
+        await store.dispatch('getCarsDb');
+        await store.dispatch('getUsers');
+      } catch (error) {
+        console.error(error);
+      }
     });
 
     const openHotelModal = () => {
@@ -308,17 +313,28 @@ export default {
       resetCarForm();
     };
 
-    const openEditHotelModal = (Hotel) => {
-      Object.assign(editHotel, Hotel);
+        const openEditHotelModal = (hotel) => {
+      Object.assign(editHotel, hotel);
       showEditHotelModal.value = true;
     };
-    const openEditFlightModal = (Flight) => {
-      Object.assign(editFlight, Flight);
+
+    const openEditFlightModal = (flight) => {
+      Object.assign(editFlight, flight);
       showEditFlightModal.value = true;
     };
-    const openEditCarModal = (Car) => {
-      Object.assign(editCar, Car);
+
+    const openEditCarModal = (car) => {
+      Object.assign(editCar, car);
       showEditCarModal.value = true;
+    };
+    const openEditUserModal = (user) => {
+      Object.assign(editUser, user);
+      showEditUserModal.value = true;
+    };
+
+    const closeEditUserModal = () => {
+      showEditUserModal.value = false;
+      resetUserForm();
     };
 
     const closeEditHotelModal = () => {
@@ -343,15 +359,7 @@ export default {
       resetUserForm();
     };
 
-    const openEditUserModal = (user) => {
-      Object.assign(editUser, user);
-      showEditUserModal.value = true;
-    };
-
-    const closeEditUserModal = () => {
-      showEditUserModal.value = false;
-      resetUserForm();
-    };
+   
 
     const submitHotel = async () => {
       try {
@@ -419,47 +427,47 @@ export default {
       }
     };
 
-    const deleteHotel = async (HotelID) => {
+    const deleteHotel = async (hotel_id) => {
       try {
-        await store.dispatch('deleteHotel', HotelID);
+        await store.dispatch('deleteHotel', hotel_id);
         toast.success("Hotel deleted successfully");
       } catch (error) {
         toast.error("Error deleting Hotel");
       }
     };
-    const deleteFlight = async (FlightID) => {
+    const deleteFlight = async (flight_id) => {
       try {
-        await store.dispatch('deleteFlight', FlightID);
-        toast.success("Flight deleted successfully");
+        await store.dispatch('deleteFlight', flight_id);
+        // toast.success("Flight deleted successfully");
       } catch (error) {
-        toast.error("Error deleting Flight");
+        // toast.error("Error deleting Flight");
       }
     };
-    const deleteCar = async (CarID) => {
+    const deleteCar = async (car_id) => {
       try {
-        await store.dispatch('deleteCar', CarID);
-        toast.success("Car deleted successfully");
+        await store.dispatch('deleteCar', car_id);
+        // toast.success("Car deleted successfully");
       } catch (error) {
-        toast.error("Error deleting Car");
+        // toast.error("Error deleting Car");
       }
     };
 
     const updateUser = async () => {
       try {
         await store.dispatch('updateUser', editUser);
-        toast.success("User updated successfully");
+        // toast.success("User updated successfully");
         closeEditUserModal();
       } catch (error) {
-        toast.error("Error updating user");
+        // toast.error("Error updating user");
       }
     };
 
     const deleteUser = async (userID) => {
       try {
-        await store.dispatch('deleteUser', userID);
+        // await store.dispatch('deleteUser', userID);
         toast.success("User deleted successfully");
       } catch (error) {
-        toast.error("Error deleting user");
+        // toast.error("Error deleting user");
       }
     };
 
@@ -553,6 +561,8 @@ export default {
       // 
       openEditHotelModal,
       closeEditHotelModal,
+      openEditUserModal,
+      closeEditUserModal,
       openEditFlightModal,
       closeEditFlightModal,
       openEditCarModal,

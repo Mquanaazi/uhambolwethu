@@ -46,14 +46,11 @@
     },
     methods: {
       async loginUser() {
-    try {
-      const response = await axios.post("http://localhost:2027/users/login", { emailAdd: this.emailAdd, userPass: this.userPass })
-      this.token = response.data.token; // Update the token property
-      this.isLoggedIn = true
-      console.log(token)
-      } catch (error) {
-      console.error(error)
-    }
+          try {
+            this.$store.dispatch('loginUser',{ emailAdd: this.emailAdd, userPass: this.userPass })
+            } catch (error) {
+            console.error(error)
+          }
   },
     logoutUser() {
       this.token = null,

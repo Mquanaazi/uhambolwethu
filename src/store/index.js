@@ -76,7 +76,9 @@ export default createStore({
     removeCheckout(state, checkoutID) {
       state.checkouts = state.checkouts.filter(c => c.checkoutID !== checkoutID)
     },
-  
+    setIsLoggedIn(state, isLoggedIn) {
+      state.isLoggedIn = isLoggedIn;
+},
 },
   actions: {
     async addUser({ commit }, info) {
@@ -94,12 +96,13 @@ export default createStore({
         toast.error("Error signing up")
       }
     },
-    async loginUser({ commit }, info) {
+    async loginUser({ commit }, { emailAdd, userPass }) {
+      console.log(emailAdd,userPass);
       try {
-        const response = await axios.post("http://localhost:2027/users/login", { emailAdd: this.emailAdd, userPass: this.userPass })
-        this.$store.commit('setToken', response.data.token); 
-        this.$store.commit('setIsLoggedIn', true);
-        let { data } = await axios.post("http://localhost:2027/users/login", info);
+        const response = await axios.post("http://localhost:2027/users/login", { emailAdd, userPass })
+        commit('setToken', response.data.token); 
+        commit('setIsLoggedIn', true);
+        let { data } = await axios.post("http://localhost:2027/users/login", { emailAdd, userPass });
         toast("welcome back!", {
           "theme": "auto",
           "type": "default",
@@ -134,6 +137,36 @@ export default createStore({
         toast.error("Error deleting user")
       }
     },
+    async deleteHotel({ commit }, hotel_id) {
+      try {
+        const response = await axios.delete(`http://localhost:202 7/assets/hotel/${hotel_id}`)
+        commit("removeHotel", hotel_id)
+        toast.success("hotel deleted successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error deleting hotel")
+      }
+    },
+    async deleteFlight({ commit }, flight_id) {
+      try {
+        const response = await axios.delete(`http://localhost:2027/assets/flight/${flight_id}`)
+        commit("removeFlight", flight_id)
+        toast.success("flight deleted successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error deleting flight")
+      }
+    },
+    async deleteCar({ commit }, car_id) {
+      try {
+        const response = await axios.delete(`http://localhost:2027/assets/car/${car_id}`)
+        commit("removeCar", car_id)
+        toast.success("car deleted successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error deleting user")
+      }
+    },
     async updateUser({ commit }, user) {
       try {
         const response = await axios.patch(`http://localhost:2027/users/${user.userID}`, user)
@@ -142,6 +175,36 @@ export default createStore({
       } catch (error) {
         console.error(error)
         toast.error("Error updating user")
+      }
+    },
+    async updateHotel({ commit }, hotel_id) {
+      try {
+        const response = await axios.patch(`http://localhost:2027/assets/hotel/${hotel_id}`)
+        commit("updateHotel", hotel)
+        toast.success("hotel updated successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error updating hotel")
+      }
+    },
+    async updateFlight({ commit }, hotel_id) {
+      try {
+        const response = await axios.patch(`http://localhost:2027/assets/flight/${flight_id}`)
+        commit("updateFlight", flight)
+        toast.success("flight updated successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error updating flight")
+      }
+    },
+    async updateCar({ commit }, hotel_id) {
+      try {
+        const response = await axios.patch(`http://localhost:2027/assets/car/${car_id}`)
+        commit("updateCar", car)
+        toast.success("car updated successfully")
+      } catch (error) {
+        console.error(error)
+        toast.error("Error updating car")
       }
     },
     async fetchHotels({ commit }) {
