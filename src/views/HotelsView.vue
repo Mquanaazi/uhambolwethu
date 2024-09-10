@@ -1,7 +1,17 @@
 <template>
   <div class="container-fluid" id="section">
-    <h2 class="display-2 text-center mb-4">PLEASE LOGIN TO ENABLE THE BOOK NOW BUTTON</h2>
-    <section  class="container-fluid">
+    <h2 class="display-2 text-center mb-4">LIMITED EDITION. BOOK NOW!</h2>
+    <section class="container-fluid">
+      <div class="search-sort-bar mb-4">
+        <input type="text" v-model="searchQuery" placeholder="Search hotels" class="form-control">
+        <select v-model="sortOption" class="form-select">
+          <option value="default">Default</option>
+          <option value="nameAsc">Name (A-Z)</option>
+          <option value="nameDesc">Name (Z-A)</option>
+          <option value="priceAsc">Price (Low-High)</option>
+          <option value="priceDesc">Price (High-Low)</option>
+        </select>
+      </div>
       <div v-for="hotel in filteredhotels" :key="hotel.hotel_id">
         <card-comp>
           <template #cardHeader>
@@ -56,12 +66,21 @@
         sorthotels();
       }, { deep: true });
   
-      // Method to add hotels to the cart
-      const addToCheckOut= (hotel) => {
-        store.dispatch('addToCheckOut', hotel);
-      };
+      
+    const addToCheckOut = (hotel) => {
+    const checkoutData = {
+    userId: store.state.isLoggedIn ? store.state.users[0].userID : null,
+    bookingType: 'hotel',
+    bookingId: hotel.hotel_id,
+    bookingDetails: hotel.hotel_name,
+    totalCost: hotel.price_per_night,
+    paymentMethod: 'credit card',
+    paymentStatus: 'pending',
+  };
+  store.dispatch('createCheckout', checkoutData);
+};
   
-      // Method to filter hotels based on search query
+      
       const filterhotels = () => {
         const query = searchQuery.value.toLowerCase();
         filteredhotels.value = hotels.value.filter(hotel =>
@@ -69,7 +88,7 @@
         );
       };
   
-      // Method to sort hotels based on selected option
+     
       const sorthotels = () => {
         if (filteredhotels.value.length === 0) return;
   
@@ -78,9 +97,9 @@
         } else if (sortOption.value === 'nameDesc') {
           filteredhotels.value.sort((a, b) => b.hotel_name.localeCompare(a.hotel_name));
         } else if (sortOption.value === 'priceAsc') {
-          filteredhotels.value.sort((a, b) => a.amount - b.amount);
+          filteredhotels.value.sort((a, b) => a.price_per_night - b.price_per_night);
         } else if (sortOption.value === 'priceDesc') {
-          filteredhotels.value.sort((a, b) => b.amount - a.amount);
+          filteredhotels.value.sort((a, b) => b.price_per_night - a.price_per_night);
         }
       };
       const view = (hotel_id) => {
@@ -89,14 +108,14 @@
   
     
       return {
-        searchQuery,
-        sortOption,
-        filteredhotels,
-        addToCheckOut,
-        filterhotels,
-        sorthotels,
-        view,
-        isLoggedIn,
+      searchQuery,
+      sortOption,
+      filteredhotels,
+      addToCheckOut,
+      filterhotels,
+      sorthotels,
+      view,
+      isLoggedIn,
       };
     },
   };
@@ -146,5 +165,24 @@
 .mb-4 {
   margin-bottom: 1.5rem;
 }
+.search-sort-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
+  .search-sort-bar input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+  }
+
+  .search-sort-bar select {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+  }
 </style>

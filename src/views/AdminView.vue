@@ -430,9 +430,9 @@ export default {
     const deleteHotel = async (hotel_id) => {
       try {
         await store.dispatch('deleteHotel', hotel_id);
-        toast.success("Hotel deleted successfully");
+        // toast.success("Hotel deleted successfully");
       } catch (error) {
-        toast.error("Error deleting Hotel");
+        // toast.error("Error deleting Hotel");
       }
     };
     const deleteFlight = async (flight_id) => {
@@ -464,8 +464,8 @@ export default {
 
     const deleteUser = async (userID) => {
       try {
-        // await store.dispatch('deleteUser', userID);
-        toast.success("User deleted successfully");
+        await store.dispatch('deleteUser', userID);
+        // toast.success("User deleted successfully");
       } catch (error) {
         // toast.error("Error deleting user");
       }

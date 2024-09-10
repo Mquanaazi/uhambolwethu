@@ -17,9 +17,9 @@
               <router-link :to="{ name: 'flight', params: { id: flight.flight_id } }">
                 <button class="btn btn-success">View</button>
               </router-link>
-              <button class="btn btn-dark disabled" @click="addToCart(flight)">BOOK NOW!</button>
+              <button class="btn btn-dark" @click="addToCheckOut(flight.flight_id)">BOOK NOW!</button>
             </div>
-            <button v-if="$cookies.get('token')" @click="addToCheckOut(flight.flight_id)">Book Now!</button>
+            <!-- <button v-if="$cookies.get('token')" @click="addToCheckOut(flight.flight_id)">Book Now!</button> -->
           </template>
         </card-comp>
       </div>

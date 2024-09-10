@@ -19,6 +19,7 @@ export default createStore({
     flight: [],
     car: [],
     checkouts: [],
+    checkoutStatus: '', 
   },
 
   getters: {},
@@ -78,6 +79,9 @@ export default createStore({
     },
     setIsLoggedIn(state, isLoggedIn) {
       state.isLoggedIn = isLoggedIn;
+},
+updateCheckoutStatus(state, status) {
+  state.checkoutStatus = status;
 },
 },
   actions: {
@@ -139,7 +143,7 @@ export default createStore({
     },
     async deleteHotel({ commit }, hotel_id) {
       try {
-        const response = await axios.delete(`http://localhost:202 7/assets/hotel/${hotel_id}`)
+        const response = await axios.delete(`http://localhost:2027/assets/hotel/${hotel_id}`)
         commit("removeHotel", hotel_id)
         toast.success("hotel deleted successfully")
       } catch (error) {
@@ -265,15 +269,7 @@ export default createStore({
         console.error(error)
       }
     },
-    async addToCheckOut({ commit }, hotel_id) {
-      try {
-        let { data } = await axios.post("http://localhost:2027/assets/hotels/CheckOut", { id: hotel_id })
-        console.log(data);
-        return data
-      } catch (error) {
-        console.error(error)
-      }
-    },
+   
     logoutUser({ commit }) {
       commit('setLoggedIn', false)
       axios.defaults.headers.common['Authorization'] = null
@@ -298,12 +294,12 @@ async fetchCheckout({ commit }, checkoutID) {
 },
 async createCheckout({ commit }, checkoutData) {
   try {
-    let { data } = await axios.post("http://localhost:2027/checkout/checkouts", checkoutData)
-    commit("addCheckout", data)
-    toast("Checkout created successfully!")
+    let { data } = await axios.post('http://localhost:2027/checkout/checkout', checkoutData);
+    commit('addCheckout', data);
+    toast("Booking in progress!");
   } catch (error) {
-    console.error(error)
-    toast.error("Error creating checkout")
+    console.error(error);
+    toast.error("YOU'RE TOO BROKE TO BOOK, BYEEE!");
   }
 },
 async updateCheckout({ commit }, checkoutData) {
@@ -325,7 +321,40 @@ async deleteCheckout({ commit }, checkoutID) {
     console.error(error)
     toast.error("Error deleting checkout")
   }
-  }
+  },
+
+  // async submitCheckout() {
+  //   try {
+       
+  //     await axios.post('http://localhost:2027/assets/CheckOut ', this.checkout);
+  //     // Reset the form
+  //     this.checkout = {
+  //       userId: null,
+  //       bookingType: '',
+  //       bookingId: null,
+  //       bookingDetails: '',
+  //       totalCost: null,
+  //       paymentMethod: '',
+  //       paymentStatus: '',
+  //     };
+     
+  //     alert('Checkout successful!');
+  //   } catch (error) {
+  //     console.error(error);
+      
+  //     alert('Error creating checkout record');
+  //   }
+  // },
+  async submitCheckout({ commit, state }, checkoutData) {
+    try {
+      await axios.post('http://localhost:2027/assets/CheckOut', checkoutData);
+      commit('updateCheckoutStatus', 'paid'); 
+      toast("Checkout successful!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Error creating checkout record");
+    }
+  },
   },
   modules: {}
   
