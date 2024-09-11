@@ -21,7 +21,7 @@
             <h2>{{ hotel.hotel_name }}</h2>
             <h2>{{ hotel.location }}</h2>
             <div class="lead">
-              <span class="text-success fw-bold">Price per night</span>: ${{ hotel.price_per_night }}
+              <h2>Rental Price per Day: ${{ hotel.price_per_night }}</h2>: 
             </div>
             <div class="button-wrapper d-flex justify-content-between mt-3">
               <router-link :to="{ name: 'hotel', params: { hotelID: hotel.hotel_id } }">

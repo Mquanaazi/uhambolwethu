@@ -11,6 +11,7 @@ export default createStore({
   state: {
     token: null,
     isLoggedIn: false,
+    bookings: [],
     hotels: [],
     flights: [],
     cars: [],

@@ -1,5 +1,7 @@
 <template>
+
   <div class="container-fluid">
+    
     <div class="card-header">
       <slot name="cardHeader"></slot>
     </div>
@@ -7,6 +9,7 @@
       <slot name="cardBody"></slot>
     </div>
   </div>
+
 </template>
 
 <script>

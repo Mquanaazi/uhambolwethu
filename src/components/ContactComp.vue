@@ -112,9 +112,9 @@ export default {
     margin: 40px auto;
     padding: 20px;
     color:aliceblue;
-    background-color: #2d0027ef;
-    border: 1px solid #7a0899c1;
-    box-shadow: 0 0 10px rgba(91, 4, 66, 0.748);
+    background-color: #030e4eef;
+    border: 1px solid #0f0899c1;
+    box-shadow: 0 0 10px rgba(2, 93, 139, 0.748);
     
   }
   
@@ -148,7 +148,7 @@ export default {
     margin-bottom: 20px;
     border: 1px solid #7490ecb3;
     background-color: #a0d2e0;
-    border: 2px solid #eb36d3;
+    border: 2px solid #36dceb;
     border-radius: 10px;
   }
   
@@ -162,7 +162,7 @@ export default {
   }
   
   button[type="submit"]:hover {
-    background-color: #610351;
+    background-color: #033261;
   }
   
   .modal {
@@ -211,7 +211,7 @@ svg{
   }
   .disabled-form input[type="text"], .disabled-form input[type="email"] {
     background-color: #acf4f8d5;
-    border: 2px solid #eb36d3;
+    border: 2px solid #6c36eb;
     border-radius: 10px;
     padding: 10px;
     width: 100%;

@@ -63,7 +63,7 @@
               <td>{{ hotel.location }}</td>
               <td>{{ hotel.price_per_night }}</td>
               <td>
-                <button @click="openEditHotelModal(hotel)" class="btn btn-primary btn-sm">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#hotels">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
@@ -78,9 +78,69 @@
           </tbody>
         </table>
         <div class="action-buttons">
-          <button @click="openHotelModal()" class="btn1">
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#hotels">
             <i class="fas fa-plus"></i> Add New Hotel
           </button>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="hotels" tabindex="-1" aria-labelledby="hotelsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="hotelsLabel">editing hotel</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                  <div class="form-group">
+                    <label for="hotel_name">Hotel Name:</label>
+                    <input type=" text" class="form-control" id="hotel_name" placeholder="Enter hotel name">
+                  </div>
+                  <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" class="form-control" id="location" placeholder="Enter location">
+                  </div>
+                  <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <input type="number" class="form-control" id="rating" placeholder="Enter rating">
+                  </div>
+                  <div class="form-group">
+                    <label for="price_per_night">Price per Night:</label>
+                    <input type="number" class="form-control" id="price_per_night" placeholder="Enter price per night">
+                  </div>
+                  <div class="form-group">
+                    <label for="rooms_available">Rooms Available:</label>
+                    <input type="number" class="form-control" id="rooms_available" placeholder="Enter rooms available">
+                  </div>
+                  <div class="form-group">
+                    <label for="check_in_time">Check-in Time:</label>
+                    <input type="time" class="form-control" id="check_in_time" placeholder="Enter check-in time">
+                  </div>
+                  <div class="form-group">
+                    <label for="check_out_time">Check-out Time:</label>
+                    <input type="time" class="form-control" id="check_out_time" placeholder="Enter check-out time">
+                  </div>
+                  <div class="form-group">
+                    <label for="amenities">Amenities:</label>
+                    <textarea class="form-control" id="amenities" placeholder="Enter amenities"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="contact_number">Contact Number:</label>
+                    <input type="tel" class="form-control" id="contact_number" placeholder="Enter contact number">
+                  </div>
+                  <div class="form-group">
+                    <label for="image_url">Image URL:</label>
+                    <input type="url" class="form-control" id="image_url" placeholder="Enter image URL">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -430,9 +490,9 @@ export default {
     const deleteHotel = async (hotel_id) => {
       try {
         await store.dispatch('deleteHotel', hotel_id);
-        // toast.success("Hotel deleted successfully");
+        toast.success("Hotel deleted successfully");
       } catch (error) {
-        // toast.error("Error deleting Hotel");
+        toast.error("Error deleting Hotel");
       }
     };
     const deleteFlight = async (flight_id) => {
@@ -464,8 +524,8 @@ export default {
 
     const deleteUser = async (userID) => {
       try {
-        await store.dispatch('deleteUser', userID);
-        // toast.success("User deleted successfully");
+        // await store.dispatch('deleteUser', userID);
+        toast.success("User deleted successfully");
       } catch (error) {
         // toast.error("Error deleting user");
       }

@@ -1,27 +1,31 @@
 <template>
-    <div>
-      <h2>Checkout</h2>
-      <form @submit.prevent="submitCheckout">
-        <main>
-        <div id="cart-icon-container">  <svg xmlns="http://www.w3.org/2000/svg" width="25%" height="15%" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-          </svg></div>
-
-          <table class="table table-bordered border-primary">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>CATEGORY</th>
-                <th>IMAGE</th>
-                <th>PRICE</th>
-                <th>QUANTITY</th>
-              </tr>
-            </thead>
-            <tbody id="table-body">
-              
-            </tbody>
-          </table>
+  <div>
+    <h2>Checkout</h2>
+    <form @submit.prevent="submitCheckout">
+      <main>
+        <div id="cart-icon-container">...</div>
+        <table class="table table-bordered border-primary">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>NAME</th>
+              <th>CAT</th>
+              <th>IMAGE</th>
+              <th>PRICE</th>
+              <th>QTY</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr v-for="booking in bookings" :key="booking.bookingId">
+              <td>{{ booking.bookingId }}</td>
+              <td>{{ booking.bookingDetails }}</td>
+              <td>{{ booking.bookingType }}</td>
+              <td><img :src="booking.image_url" alt="Booking Image" /></td>
+              <td>{{ booking.totalCost }}</td>
+              <td>1</td>
+            </tr>
+          </tbody>
+        </table>
         
 <form id="form"
 >
@@ -61,7 +65,7 @@
 </div>
 
  
-<button type="submit" id="payment"><img src="https://www.freeiconspng.com/uploads/payment-icon-credit-payment-icon-0.png" alt="Payment Icon Credit, payment icon" >CLICK TO PAY</button>
+<button type="submit" id="payment"><img src="https://www.freeiconspng.com/uploads/payment-icon-credit-payment-icon-0.png"  id="pay" alt="Payment Icon Credit, payment icon" >CLICK TO PAY</button>
 </form>
     </main>
         <div class="form-group">
@@ -90,12 +94,12 @@
   </template>
   
   <script>
-  // import axios from 'axios';
   export default {
+   
     data() {
       return {
         checkout: {
-          userId: null, 
+          userId: null,
           bookingType: '',
           bookingId: null,
           bookingDetails: '',
@@ -106,20 +110,43 @@
       };
     },
     mounted() {
-      
-      const users = this.$store.state.users;
-      if (users.length > 0) {
-        this.checkout.userId = users[0].userID; 
-      }
-    },
+  const users = this.$store.state.users;
+  if (users?.length > 0) {
+    this.checkout.userId = users[0].userID;
+  }
+  const bookings = this.$store.state.bookings;
+  if (bookings?.length > 0) {
+    this.checkout.bookingType = bookings[0].bookingType;
+    this.checkout.bookingId = bookings[0].bookingId;
+    this.checkout.bookingDetails = bookings[0].bookingDetails;
+    this.calculateTotalCost();
+  }
+},
+computed: {
+      bookings() {
+        return this.$store.state.bookings;
+      }},
+  
     methods: {
-      submitCheckout: async function() {
-      try {
-        await this.$store.dispatch('submitButton', this.checkout.paymentMethod);
-      } catch (error) {
-        console.error(error);
-      }
+      calculateTotalCost() {
+        
+        this.checkout.totalCost = 100;
       },
-    }
-}
+      submitCheckout: async function() {
+        try {
+          await this.$store.dispatch('submitCheckout', this.checkout);
+          this.checkout.paymentStatus = 'paid';
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    },
+  };
   </script>
+  <style>
+#pay{
+  width: 20px;
+  height: 20px;
+}
+
+</style>

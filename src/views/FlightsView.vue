@@ -1,8 +1,11 @@
 <template>
   <div id="section">
-    <h2 class="display-2 text-center mb-4">PLEASE LOGIN TO ENABLE THE BOOK NOW BUTTON</h2>
+    <h2 class="display-2 text-center mb-4">Flights</h2>
     <section id="assets">
-      <div v-for="flight in $store.state.flights" :key="flight.flight_id">
+      <div class="search-sort-bar mb-4">
+        <input type="text" v-model="durationTimeFilter" placeholder="Filter by duration time" class="form-control">
+      </div>
+      <div v-for="flight in filteredFlights" :key="flight.flight_id">
         <card-comp>
           <template #cardHeader>
             <img :src="flight.image_url" alt="Flight Image" />
@@ -13,13 +16,12 @@
             <div class="lead">
               <span class="text-success fw-bold">Price:</span> ${{ flight.price }}
             </div>
+            <button v-if="isLoggedIn" class="btn btn-dark" @click="addToCheckOut(flight.flight_id)">BOOK NOW!</button>
             <div class="button-wrapper d-flex justify-content-between mt-3">
               <router-link :to="{ name: 'flight', params: { id: flight.flight_id } }">
                 <button class="btn btn-success">View</button>
               </router-link>
-              <button class="btn btn-dark" @click="addToCheckOut(flight.flight_id)">BOOK NOW!</button>
             </div>
-            <!-- <button v-if="$cookies.get('token')" @click="addToCheckOut(flight.flight_id)">Book Now!</button> -->
           </template>
         </card-comp>
       </div>
@@ -28,30 +30,39 @@
 </template>
 
 <script>
-/* eslint-disable */
-import CardComp from '@/components/CardComp.vue'; 
+import CardComp from '@/components/CardComp.vue';
 
 export default {
   components: { CardComp },
-    methods: {
-      getFlightsData() {
-        this.$store.dispatch('fetchFlights')
-      },
-      addToCheckOut(flight_id) {
-        this.$store.dispatch('addToCheckOut', flight_id)
-      },
-      // viewFlight(flight_id) {
-      //   this.$router.push({ name: 'flight', params: { id: flight_id } })
-      // },
-      addToCart(flight) {
-        this.$store.dispatch('addToCart', flight)
-      }
+  data() {
+    return {
+      durationTimeFilter: '',
+    };
+  },
+  computed: {
+    filteredFlights() {
+      return this.$store.state.flights.filter(flight => {
+        const durationTime = new Date(flight.duration_time).toLocaleTimeString();
+        return durationTime.includes(this.durationTimeFilter);
+      });
     },
-    mounted() {
-      this.getFlightsData()
-    }
-  }
-  </script>
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    },
+  },
+  methods: {
+    getFlightsData() {
+      this.$store.dispatch('fetchFlights');
+    },
+    addToCheckOut(flight_id) {
+      this.$store.dispatch('addToCheckOut', flight_id);
+    },
+  },
+  mounted() {
+    this.getFlightsData();
+  },
+};
+</script>
   
   <style>
   .content-container {
