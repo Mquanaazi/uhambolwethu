@@ -16,15 +16,15 @@
             <h2>{{ car.car_model }}</h2>
             <h2>Rental Price per Day: ${{ car.rental_price_per_day }}</h2>
             <div class="lead">
-              <span class="text-success fw-bold">Price:</span> ${{ car.rental_price_per_day }}
+             
             </div>
             <div class="button-wrapper d-flex justify-content-between mt-3">
               <router-link :to="{ name: 'car', params: { cardID: car.car_id } }">
                 <button class="btn btn-success">View</button>
               </router-link>
-              <button class="btn btn-dark disabled" @click="addToCart(car)">BOOK NOW!</button>
+              <button v-if="isLoggedIn" class="btn btn-dark" @click="addToCheckOut(car.car_id)">BOOK NOW!</button>
+            <button v-else class="btn btn-dark disabled" @click="addToCart(car)">BOOK NOW!</button>
             </div>
-            <button v-if="$cookies.get('token')" @click="addToCheckOut(car.car_id)">BOOK NOW!</button>
           </template>
         </card-comp>
       </div>

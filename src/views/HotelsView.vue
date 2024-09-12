@@ -1,6 +1,8 @@
 <template>
   <div class="container-fluid" id="section">
-    <h2 class="display-2 text-center mb-4">LIMITED EDITION. BOOK NOW!</h2>
+    <!-- <h2 class="display-2 text-center mb-4">LIMITED EDITION. BOOK NOW!</h2> -->
+    <h2 v-if="isLoggedIn" class="display-2 text-center mb-4">LIMITED EDITION. BOOK NOW!</h2>
+    <h2 v-else class="display-2 text-center mb-4">PLEASE LOGIN TO ENABLE THE BOOK NOW BUTTON</h2>
     <section class="container-fluid">
       <div class="search-sort-bar mb-4">
         <input type="text" v-model="searchQuery" placeholder="Search hotels" class="form-control">
@@ -27,8 +29,8 @@
               <router-link :to="{ name: 'hotel', params: { hotelID: hotel.hotel_id } }">
                 <button class="btn btn-success" @click="view(hotel.hotel_id)">VIEW MORE</button>
               </router-link>
-              <button class="btn btn-dark" @click="addToCheckOut(hotel.hotel_id)">BOOK NOW! 😊</button>
-              <!-- <button class="btn btn-dark" :disabled="!isLoggedIn" @click="addToCheckOut(hotel.hotel_id)">BOOK NOW! 😊</button> -->
+              <button v-if="isLoggedIn" class="btn btn-dark" @click="addToCheckOut(hotel.hotel_id)">BOOK NOW!</button>
+            <button v-else class="btn btn-dark disabled" @click="addToCart(hotel)">BOOK NOW!</button>
             </div>
           </template>
         </card-comp>
@@ -37,77 +39,65 @@
   </div>
 </template>
   
-  <script>
-  import { computed, ref, watch, onMounted } from 'vue';
-  import { useStore } from 'vuex';
-  import { useRouter } from 'vue-router';
-  import CardComp from '@/components/CardComp.vue';
-  export default {
-    components: { CardComp },
-    setup() {
-      const isLoggedIn = computed(() => store.state.isLoggedIn)
-      const store = useStore();
-      const router = useRouter();
-      const searchQuery = ref('');
-      const sortOption = ref('default');
-      const hotels = computed(() => store.state.hotels);
-      const filteredhotels = ref([]);
+<script>
+import { computed, ref, watch, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import CardComp from '@/components/CardComp.vue';
 
+export default {
+  components: { CardComp },
+  setup() {
+    const isLoggedIn = computed(() => store.state.isLoggedIn);
+    const store = useStore();
+    const router = useRouter();
+    const searchQuery = ref('');
+    const sortOption = ref('default');
+    const hotels = computed(() => store.state.hotels);
+    const filteredhotels = ref([]);
 
-  
-      onMounted(async () => {
-  await store.dispatch('fetchHotels');
-  filteredhotels.value = [...hotels.value];
-});
-  
-      // Watch for changes in hotels, searchQuery, and sortOption to update filteredhotels
-      watch([hotels, searchQuery, sortOption], () => {
-        filterhotels();
-        sorthotels();
-      }, { deep: true });
-  
-      
-    const addToCheckOut = (hotel) => {
-    const checkoutData = {
-    userId: store.state.isLoggedIn ? store.state.users[0].userID : null,
-    bookingType: 'hotel',
-    bookingId: hotel.hotel_id,
-    bookingDetails: hotel.hotel_name,
-    totalCost: hotel.price_per_night,
-    paymentMethod: 'credit card',
-    paymentStatus: 'pending',
-  };
-  store.dispatch('createCheckout', checkoutData);
-};
-  
-      
-      const filterhotels = () => {
-        const query = searchQuery.value.toLowerCase();
-        filteredhotels.value = hotels.value.filter(hotel =>
-          hotel.hotel_name.toLowerCase().includes(query)
-        );
-      };
-  
-     
-      const sorthotels = () => {
-        if (filteredhotels.value.length === 0) return;
-  
-        if (sortOption.value === 'nameAsc') {
-          filteredhotels.value.sort((a, b) => a.hotel_name.localeCompare(b.hotel_name));
-        } else if (sortOption.value === 'nameDesc') {
-          filteredhotels.value.sort((a, b) => b.hotel_name.localeCompare(a.hotel_name));
-        } else if (sortOption.value === 'priceAsc') {
-          filteredhotels.value.sort((a, b) => a.price_per_night - b.price_per_night);
-        } else if (sortOption.value === 'priceDesc') {
-          filteredhotels.value.sort((a, b) => b.price_per_night - a.price_per_night);
-        }
-      };
-      const view = (hotel_id) => {
+    onMounted(async () => {
+      await store.dispatch('fetchHotels');
+      filteredhotels.value = [...hotels.value];
+    });
+
+    // Watch for changes in hotels, searchQuery, and sortOption to update filteredhotels
+    watch([hotels, searchQuery, sortOption], () => {
+      filterhotels();
+      sorthotels();
+    }, { deep: true });
+
+    const addToCheckOut = (hotel_id) => {
+      const checkoutData = { hotel_id: hotel_id };
+      store.dispatch('createCheckout', checkoutData);
+    };
+
+    const filterhotels = () => {
+      const query = searchQuery.value.toLowerCase();
+      filteredhotels.value = hotels.value.filter(hotel =>
+        hotel.hotel_name.toLowerCase().includes(query)
+      );
+    };
+
+    const sorthotels = () => {
+      if (filteredhotels.value.length === 0) return;
+
+      if (sortOption.value === 'nameAsc') {
+        filteredhotels.value.sort((a, b) => a.hotel_name.localeCompare(b.hotel_name));
+      } else if (sortOption.value === 'nameDesc') {
+        filteredhotels.value.sort((a, b) => b.hotel_name.localeCompare(a.hotel_name));
+      } else if (sortOption.value === 'priceAsc') {
+        filteredhotels.value.sort((a, b) => a.price_per_night - b.price_per_night);
+      } else if (sortOption.value === 'priceDesc') {
+        filteredhotels.value.sort((a, b) => b.price_per_night - a.price_per_night);
+      }
+    };
+
+    const view = (hotel_id) => {
       router.push({ name: 'hotel', params: { hotelID: hotel_id } });
     };
-  
-    
-      return {
+
+    return {
       searchQuery,
       sortOption,
       filteredhotels,
@@ -116,10 +106,10 @@
       sorthotels,
       view,
       isLoggedIn,
-      };
-    },
-  };
-  </script>
+    };
+  },
+};
+</script>
 <style>
 .content-container {
   position: relative;

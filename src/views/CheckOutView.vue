@@ -22,7 +22,7 @@
               <td>{{ booking.bookingType }}</td>
               <td><img :src="booking.image_url" alt="Booking Image" /></td>
               <td>{{ booking.totalCost }}</td>
-              <td>1</td>
+              <td><button onclick="increment()">+</button>1<button onclick="decrement()">-</button></td>
             </tr>
           </tbody>
         </table>
@@ -99,20 +99,21 @@
     data() {
       return {
         checkout: {
-          userId: null,
+          userID: null,
           bookingType: '',
           bookingId: null,
           bookingDetails: '',
           totalCost: null,
           paymentMethod: '',
           paymentStatus: '',
+          count: 0,
         },
       };
     },
     mounted() {
   const users = this.$store.state.users;
   if (users?.length > 0) {
-    this.checkout.userId = users[0].userID;
+    this.checkout.userID = users[0].userID;
   }
   const bookings = this.$store.state.bookings;
   if (bookings?.length > 0) {
@@ -122,6 +123,18 @@
     this.calculateTotalCost();
   }
 },
+methods: {
+    increment() {
+      this.count++;
+      // Update the input field value using Vue.js
+      this.$refs.qtyInput.value = this.count;
+    },
+    decrement() {
+      if (this.count > 0) {
+        this.count--;
+        this.$refs.qtyInput.value = this.count;
+      }
+    },
 computed: {
       bookings() {
         return this.$store.state.bookings;
@@ -141,7 +154,8 @@ computed: {
         }
       },
     },
-  };
+  }
+};
   </script>
   <style>
 #pay{

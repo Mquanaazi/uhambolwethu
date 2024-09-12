@@ -14,9 +14,10 @@
             <h2>{{ flight.airline }}</h2>
             <h2>Location: {{ flight.location }}</h2>
             <div class="lead">
-              <span class="text-success fw-bold">Price:</span> ${{ flight.price }}
+              <h2>Ticket Amount: ${{ flight.price }}</h2> 
             </div>
             <button v-if="isLoggedIn" class="btn btn-dark" @click="addToCheckOut(flight.flight_id)">BOOK NOW!</button>
+            <button v-else class="btn btn-dark disabled" @click="addToCart(flight)">BOOK NOW!</button>
             <div class="button-wrapper d-flex justify-content-between mt-3">
               <router-link :to="{ name: 'flight', params: { id: flight.flight_id } }">
                 <button class="btn btn-success">View</button>

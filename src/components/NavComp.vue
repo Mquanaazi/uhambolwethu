@@ -40,8 +40,6 @@ export default {
 
 </script>
 <style>
-/*  */
-
 #header-title {
   color: rgb(139, 104, 7);
   transition: transform 0.5s ease-in-out;
