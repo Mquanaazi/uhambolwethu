@@ -12,37 +12,37 @@ const pool=createPool({
 
 const getCheckoutDb = async(checkout_id)=>{
   console.log(checkout_id);
-  let [[checkoutData]] = await pool.query('SELECT * FROM travel.checkout WHERE checkout_id = ?',[checkout_id])
+  let [[checkoutData]] = await pool.query('SELECT * FROM bxu04awdha05fvbqlv16.checkout WHERE checkout_id = ?',[checkout_id])
   
   return checkoutData
      
 }
 
 const getCheckoutsDb = async()=>{
-  let [checkoutData] = await pool.query('SELECT * FROM travel.checkout')
+  let [checkoutData] = await pool.query('SELECT * FROM bxu04awdha05fvbqlv16.checkout')
   return checkoutData
    
    
 }
 
-const createCheckoutDb = async(user_id, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status)=>{
+const createCheckoutDb = async(userID, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status)=>{
   await pool.query(`
-    INSERT INTO travel.checkout (user_id, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status) 
+    INSERT INTO bxu04awdha05fvbqlv16.checkout (userID, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status) 
     VALUES (?, ?, ?, ?, ?, ?, ?)
-    `,[user_id, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status])
+    `,[userID, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status])
 }
 
 const deleteCheckoutDb = async(checkout_id)=>{
-  await pool.query('DELETE FROM travel.checkout WHERE checkout_id=?',[checkout_id])
+  await pool.query('DELETE FROM bxu04awdha05fvbqlv16.checkout WHERE checkout_id=?',[checkout_id])
 }
 
-const updateCheckoutDb = async(user_id, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status, checkout_id)=>{
+const updateCheckoutDb = async(userID, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status, checkout_id)=>{
   let [checkoutData] = await pool.query(`
-    UPDATE travel.checkout 
-    SET user_id=?, booking_type=?, booking_id=?, booking_details=?, total_cost=?, payment_method=?, payment_status=?
+    UPDATE bxu04awdha05fvbqlv16.checkout 
+    SET userID=?, booking_type=?, booking_id=?, booking_details=?, total_cost=?, payment_method=?, payment_status=?
     WHERE checkout_id=?
     `,
-    [user_id, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status, checkout_id])
+    [userID, booking_type, booking_id, booking_details, total_cost, payment_method, payment_status, checkout_id])
   return checkoutData
 }
 
