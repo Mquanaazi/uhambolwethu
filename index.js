@@ -7,7 +7,7 @@ import checkoutRoutes from './routes/checkoutRoutes.js'
 
 
 const app=express()
-app.use(cors({ origin: ['*','http://localhost:8080'], credentials: true }))
+app.use(cors({ origin: ['uhambolwettu.web.app','http://localhost:8080'], credentials: true }))
 const frontendPort = process.env.FRONTEND_PORT || 8081
 // app.use(cors({ origin: `http://localhost:${frontendPort}`, credentials: true }))
 
